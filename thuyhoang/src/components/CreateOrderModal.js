@@ -107,25 +107,35 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, h
   useEffect(() => {
     if (loggedInCustomer && loggedInCustomer.name) {
       console.log('Setting customer name in the order:', loggedInCustomer.name);
-      setNewOrder(prev => ({ ...prev, customer: loggedInCustomer.name }));
+  
+      // Only update if the customer name is not already set
+      if (newOrder.customer !== loggedInCustomer.name) {
+        setNewOrder(prev => ({
+          ...prev,
+          customer: loggedInCustomer.name
+        }));
+      }
     } else {
       console.warn('Customer name not found in loggedInCustomer');
     }
-  }, [loggedInCustomer, setNewOrder]);
+  }, [loggedInCustomer, newOrder.customer, setNewOrder]);
 
   useEffect(() => {
     const totalQuantity = newOrder.productList.reduce((total, product) => total + parseInt(product.quantity || 0), 0);
     const totalAmount = loggedInCustomer ? totalQuantity * (loggedInCustomer.short_price || 0) : 0;
-
+  
     console.log('Calculated total quantity:', totalQuantity);
     console.log('Calculated total amount:', totalAmount);
-
-    setNewOrder(prev => ({
-      ...prev,
-      totalQuantity,
-      total: totalAmount,
-    }));
-  }, [newOrder.productList, loggedInCustomer, setNewOrder]);
+  
+    // Only update state if necessary to avoid re-renders
+    if (newOrder.totalQuantity !== totalQuantity || newOrder.total !== totalAmount) {
+      setNewOrder(prev => ({
+        ...prev,
+        totalQuantity,
+        total: totalAmount
+      }));
+    }
+  }, [newOrder.productList, loggedInCustomer, newOrder.totalQuantity, newOrder.total, setNewOrder]); // Add all necessary dependencies
 
   return (
     <div className="modal">
