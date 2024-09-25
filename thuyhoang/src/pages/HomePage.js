@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import CreateOrderModal from '../components/CreateOrderModal';
 
@@ -12,19 +12,18 @@ const Home = () => {
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [orderError, setOrderError] = useState(null);
 
-  // Safely parse the logged-in customer from localStorage
-  const loggedInCustomer = (() => {
+  // Use useMemo to safely parse the logged-in customer from localStorage only once
+  const loggedInCustomer = useMemo(() => {
     try {
       const storedCustomer = localStorage.getItem('loggedInCustomer');
       if (storedCustomer && storedCustomer !== 'undefined') {
-        const parsedCustomer = JSON.parse(storedCustomer);
-        return parsedCustomer;
+        return JSON.parse(storedCustomer);
       }
     } catch (e) {
       console.error('Error parsing loggedInCustomer from localStorage:', e);
     }
     return null;
-  })();
+  }, []);
 
   // Fetch all orders and filter those that match the logged-in customer name
   useEffect(() => {
@@ -56,9 +55,8 @@ const Home = () => {
         }
         setLoadingOrders(false);
       });
-      
     }
-  }, [loggedInCustomer]);
+  }, [loggedInCustomer]); // This will now only run once when loggedInCustomer is calculated
 
   const handleOrderSaveClick = () => {
     // Submit order logic

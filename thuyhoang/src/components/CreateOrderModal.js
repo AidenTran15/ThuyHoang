@@ -111,7 +111,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
       orderID: Math.floor(10000 + Math.random() * 90000).toString(),
       customer_name: newOrder.customer,
       product_list: newOrder.productList.map((product, index) => ({
-        product_id: `P00${index + 1}`,
+        product_id: productIDs[`${product.color}-${product.size}`] || `P00${index + 1}`,
         color: product.color,
         size: product.size,
         quantity: product.quantity
@@ -121,11 +121,11 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
       status: 'Pending',
       orderDate: new Date().toISOString().replace('T', ' ').substring(0, 16)
     };
-
+  
     const requestBody = JSON.stringify({
       body: JSON.stringify(orderWithID)
     });
-
+  
     axios.post('https://n73lcvb962.execute-api.ap-southeast-2.amazonaws.com/prod/add', requestBody, {
       headers: { 'Content-Type': 'application/json' }
     })
@@ -134,10 +134,22 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
         handleClose();  // Close the modal after saving
       })
       .catch(error => {
-        console.error('Error saving the order:', error.response ? error.response.data : error.message);
+        if (error.response) {
+          // Server responded with a status other than 200 range
+          console.error('Server Error:', error.response.data);
+          alert(`Error: ${error.response.status} - ${error.response.data.message}`);
+        } else if (error.request) {
+          // No response was received
+          console.error('Network error, no response received:', error.request);
+          alert('Network error: no response received from the server.');
+        } else {
+          // Something happened in setting up the request
+          console.error('Request Error:', error.message);
+          alert('Error saving the order: ' + error.message);
+        }
       });
   };
-
+  
   return (
     <div className="modal">
       <div className="modal-content">
