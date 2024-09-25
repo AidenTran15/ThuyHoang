@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CreateOrderModal from './CreateOrderModal';
+import CreateOrderModal from '../components/CreateOrderModal';
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
