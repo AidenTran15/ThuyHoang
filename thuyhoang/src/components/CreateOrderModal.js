@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './CreateOrderModal.css';
 
-const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, handleClose }) => {
+const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
   const [uniqueColors, setUniqueColors] = useState([]);
   const [filteredSizes, setFilteredSizes] = useState({});
   const [products, setProducts] = useState([]);
@@ -13,41 +13,25 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, h
   const loggedInCustomer = (() => {
     try {
       const storedCustomer = localStorage.getItem('loggedInCustomer');
-      console.log('Raw storedCustomer from localStorage:', storedCustomer);
-
-      // Ensure valid data before parsing
       if (storedCustomer && storedCustomer !== 'undefined') {
         const parsedCustomer = JSON.parse(storedCustomer);
-        console.log('Parsed loggedInCustomer:', parsedCustomer);
         return parsedCustomer;
-      } else {
-        console.warn('No valid customer found in localStorage');
-        return null;
       }
     } catch (e) {
       console.error('Error parsing loggedInCustomer from localStorage:', e);
-      return null;
     }
+    return null;
   })();
-
-  console.log('Logged in customer from localStorage:', loggedInCustomer);
 
   useEffect(() => {
     axios.get('https://jic2uc8adb.execute-api.ap-southeast-2.amazonaws.com/prod/get')
       .then(response => {
-        try {
-          const productData = JSON.parse(response.data.body);
-          setProducts(productData);
-
-          const colors = [...new Set(productData.map(product => product.Color))];
-          setUniqueColors(colors);
-        } catch (e) {
-          console.error('Error parsing product data:', e);
-        }
+        const productData = JSON.parse(response.data.body);
+        setProducts(productData);
+        const colors = [...new Set(productData.map(product => product.Color))];
+        setUniqueColors(colors);
       })
-      .catch(error => {
-        console.error('Error fetching products:', error);
-      });
+      .catch(error => console.error('Error fetching products:', error));
   }, []);
 
   const filterSizesByColor = (color) => {
@@ -57,13 +41,11 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, h
 
   const getMaxQuantityAndProductID = (color, size) => {
     const product = products.find(product => product.Color === color && product.Size.toString() === size.toString());
-
     if (product) {
       setProductIDs(prev => ({ ...prev, [`${color}-${size}`]: product.ProductID }));
       return product.Quantity;
-    } else {
-      return 0;
     }
+    return 0;
   };
 
   const handleProductChange = (index, field, value) => {
@@ -106,36 +88,55 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, h
 
   useEffect(() => {
     if (loggedInCustomer && loggedInCustomer.name) {
-      console.log('Setting customer name in the order:', loggedInCustomer.name);
-  
-      // Only update if the customer name is not already set
-      if (newOrder.customer !== loggedInCustomer.name) {
-        setNewOrder(prev => ({
-          ...prev,
-          customer: loggedInCustomer.name
-        }));
-      }
-    } else {
-      console.warn('Customer name not found in loggedInCustomer');
+      setNewOrder(prev => ({
+        ...prev,
+        customer: loggedInCustomer.name
+      }));
     }
-  }, [loggedInCustomer, newOrder.customer, setNewOrder]);
+  }, [loggedInCustomer, setNewOrder]);
 
   useEffect(() => {
     const totalQuantity = newOrder.productList.reduce((total, product) => total + parseInt(product.quantity || 0), 0);
     const totalAmount = loggedInCustomer ? totalQuantity * (loggedInCustomer.short_price || 0) : 0;
-  
-    console.log('Calculated total quantity:', totalQuantity);
-    console.log('Calculated total amount:', totalAmount);
-  
-    // Only update state if necessary to avoid re-renders
-    if (newOrder.totalQuantity !== totalQuantity || newOrder.total !== totalAmount) {
-      setNewOrder(prev => ({
-        ...prev,
-        totalQuantity,
-        total: totalAmount
-      }));
-    }
-  }, [newOrder.productList, loggedInCustomer, newOrder.totalQuantity, newOrder.total, setNewOrder]); // Add all necessary dependencies
+    setNewOrder(prev => ({
+      ...prev,
+      totalQuantity,
+      total: totalAmount,
+    }));
+  }, [newOrder.productList, loggedInCustomer, setNewOrder]);
+
+  // New function to handle saving the order
+  const handleCreateOrderSaveClick = () => {
+    const orderWithID = {
+      orderID: Math.floor(10000 + Math.random() * 90000).toString(),
+      customer_name: newOrder.customer,
+      product_list: newOrder.productList.map((product, index) => ({
+        product_id: `P00${index + 1}`,
+        color: product.color,
+        size: product.size,
+        quantity: product.quantity
+      })),
+      total_quantity: newOrder.totalQuantity,
+      total_amount: newOrder.total,
+      status: 'Pending',
+      orderDate: new Date().toISOString().replace('T', ' ').substring(0, 16)
+    };
+
+    const requestBody = JSON.stringify({
+      body: JSON.stringify(orderWithID)
+    });
+
+    axios.post('https://n73lcvb962.execute-api.ap-southeast-2.amazonaws.com/prod/add', requestBody, {
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(response => {
+        console.log('Order saved successfully:', response.data);
+        handleClose();  // Close the modal after saving
+      })
+      .catch(error => {
+        console.error('Error saving the order:', error.response ? error.response.data : error.message);
+      });
+  };
 
   return (
     <div className="modal">
