@@ -22,7 +22,7 @@ const Home = () => {
         <CreateOrderModal
           newOrder={newOrder}
           setNewOrder={setNewOrder}
-          handleOrderSaveClick={handleOrderSaveClick}
+          handleCreateOrderSaveClick={handleOrderSaveClick}
           handleClose={() => setIsModalOpen(false)}
         />
       )}

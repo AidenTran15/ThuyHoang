@@ -5,7 +5,7 @@ const LoginPage = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const navigate = useNavigate();  // Replaces useHistory
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,19 +17,38 @@ const LoginPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, password }),
+        body: JSON.stringify({
+          body: JSON.stringify({ name, password })  // Correct body format
+        }),
       });
 
+      // Parse the result to get the customer data
       const result = await response.json();
+      console.log('Login API response:', result);
+
       if (response.ok) {
-        // If login is successful, navigate to the home page
-        navigate('/home');
+        // Parse the body because it's a stringified JSON
+        const parsedBody = JSON.parse(result.body);
+
+        if (parsedBody.customer) {
+          console.log('Login successful, storing customer info:', parsedBody.customer);
+          localStorage.setItem('loggedInCustomer', JSON.stringify(parsedBody.customer));
+
+          // Redirect to home page
+          navigate('/home');
+        } else {
+          console.error('Login failed: No customer data returned.');
+          setError('Login failed: No customer data found.');
+        }
       } else {
+        console.error('Login error:', result.error);
         setError(result.error);
+        localStorage.removeItem('loggedInCustomer'); // Ensure no invalid data is stored
       }
     } catch (error) {
       console.error('Login failed:', error);
       setError('An error occurred during login.');
+      localStorage.removeItem('loggedInCustomer'); // Ensure no invalid data is stored
     }
   };
 

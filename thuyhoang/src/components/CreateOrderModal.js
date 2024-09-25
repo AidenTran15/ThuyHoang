@@ -3,41 +3,47 @@ import axios from 'axios';
 import './CreateOrderModal.css';
 
 const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, handleClose }) => {
-  const [customers, setCustomers] = useState([]);
-  const [loadingCustomers, setLoadingCustomers] = useState(true);
-  const [customerError, setCustomerError] = useState(null);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [uniqueColors, setUniqueColors] = useState([]);
   const [filteredSizes, setFilteredSizes] = useState({});
   const [products, setProducts] = useState([]);
   const [maxQuantities, setMaxQuantities] = useState({});
   const [productIDs, setProductIDs] = useState({});
 
-  // Fetch customers when the modal opens
-  useEffect(() => {
-    axios.get('https://twnbtj6wuc.execute-api.ap-southeast-2.amazonaws.com/prod/customers') // Update the endpoint to your actual API
-      .then(response => {
-        const customerData = JSON.parse(response.data.body);
-        setCustomers(Array.isArray(customerData) ? customerData : []);
-        setLoadingCustomers(false);
-      })
-      .catch(error => {
-        console.error('Error fetching customers:', error);
-        setCustomerError('Error fetching customers');
-        setLoadingCustomers(false);
-      });
-  }, []);
+  // Safely parse the logged-in customer from localStorage
+  const loggedInCustomer = (() => {
+    try {
+      const storedCustomer = localStorage.getItem('loggedInCustomer');
+      console.log('Raw storedCustomer from localStorage:', storedCustomer);
 
-  // Fetch the available products
+      // Ensure valid data before parsing
+      if (storedCustomer && storedCustomer !== 'undefined') {
+        const parsedCustomer = JSON.parse(storedCustomer);
+        console.log('Parsed loggedInCustomer:', parsedCustomer);
+        return parsedCustomer;
+      } else {
+        console.warn('No valid customer found in localStorage');
+        return null;
+      }
+    } catch (e) {
+      console.error('Error parsing loggedInCustomer from localStorage:', e);
+      return null;
+    }
+  })();
+
+  console.log('Logged in customer from localStorage:', loggedInCustomer);
+
   useEffect(() => {
     axios.get('https://jic2uc8adb.execute-api.ap-southeast-2.amazonaws.com/prod/get')
       .then(response => {
-        const productData = JSON.parse(response.data.body);
-        setProducts(productData);
+        try {
+          const productData = JSON.parse(response.data.body);
+          setProducts(productData);
 
-        // Extract unique colors from the product data
-        const colors = [...new Set(productData.map(product => product.Color))];
-        setUniqueColors(colors);
+          const colors = [...new Set(productData.map(product => product.Color))];
+          setUniqueColors(colors);
+        } catch (e) {
+          console.error('Error parsing product data:', e);
+        }
       })
       .catch(error => {
         console.error('Error fetching products:', error);
@@ -45,9 +51,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, h
   }, []);
 
   const filterSizesByColor = (color) => {
-    const sizesForColor = products
-      .filter(product => product.Color === color)
-      .map(product => product.Size);
+    const sizesForColor = products.filter(product => product.Color === color).map(product => product.Size);
     setFilteredSizes({ [color]: [...new Set(sizesForColor)] });
   };
 
@@ -100,59 +104,42 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, h
     setNewOrder({ ...newOrder, productList: updatedProducts });
   };
 
-  const handleNewOrderInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewOrder(prev => ({ ...prev, [name]: value }));
-  };
+  useEffect(() => {
+    if (loggedInCustomer && loggedInCustomer.name) {
+      console.log('Setting customer name in the order:', loggedInCustomer.name);
+      setNewOrder(prev => ({ ...prev, customer: loggedInCustomer.name }));
+    } else {
+      console.warn('Customer name not found in loggedInCustomer');
+    }
+  }, [loggedInCustomer, setNewOrder]);
 
-  const handleCustomerChange = (e) => {
-    const selectedCustomerName = e.target.value;
-    const customer = customers.find(c => c.name === selectedCustomerName);
-    setSelectedCustomer(customer);
-    setNewOrder({ ...newOrder, customer: selectedCustomerName });
-  };
-
-  // Calculate the total quantity and amount whenever productList or selectedCustomer changes
   useEffect(() => {
     const totalQuantity = newOrder.productList.reduce((total, product) => total + parseInt(product.quantity || 0), 0);
-    const totalAmount = selectedCustomer 
-      ? totalQuantity * (selectedCustomer.short_price || 0) 
-      : 0;
+    const totalAmount = loggedInCustomer ? totalQuantity * (loggedInCustomer.short_price || 0) : 0;
+
+    console.log('Calculated total quantity:', totalQuantity);
+    console.log('Calculated total amount:', totalAmount);
 
     setNewOrder(prev => ({
       ...prev,
       totalQuantity,
       total: totalAmount,
     }));
-  }, [newOrder.productList, selectedCustomer, setNewOrder]);
+  }, [newOrder.productList, loggedInCustomer, setNewOrder]);
 
   return (
     <div className="modal">
       <div className="modal-content">
         <h3 className="modal-title">Create New Order</h3>
 
-        {/* Customer selection section */}
         <div className="input-group">
           <label className="input-label">Customer Name</label>
-          {loadingCustomers ? (
-            <p>Loading customers...</p>
-          ) : customerError ? (
-            <p>{customerError}</p>
-          ) : (
-            <select
-              name="customer"
-              value={newOrder.customer || ''}
-              onChange={handleCustomerChange}
-              className="input-field"
-            >
-              <option value="" disabled>Select a customer</option>
-              {customers.map(customer => (
-                <option key={customer.phone_number} value={customer.name}>
-                  {customer.name}
-                </option>
-              ))}
-            </select>
-          )}
+          <input
+            type="text"
+            value={loggedInCustomer?.name ? `Welcome, ${loggedInCustomer.name}` : 'Customer not found'}
+            readOnly
+            className="input-field"
+          />
         </div>
 
         {newOrder.productList.map((product, index) => (
@@ -169,9 +156,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, h
                     className="input-field"
                   >
                     {uniqueColors.map(color => (
-                      <option key={color} value={color}>
-                        {color}
-                      </option>
+                      <option key={color} value={color}>{color}</option>
                     ))}
                   </select>
                 )}
@@ -188,9 +173,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, h
                     className="input-field"
                   >
                     {(filteredSizes[product.color] || []).map(size => (
-                      <option key={size} value={size}>
-                        {size}
-                      </option>
+                      <option key={size} value={size}>{size}</option>
                     ))}
                   </select>
                 )}
@@ -207,9 +190,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, h
                     className="input-field"
                   >
                     {[...Array(maxQuantities[`${product.color}-${product.size}`] || 0).keys()].map(q => (
-                      <option key={q + 1} value={q + 1}>
-                        {q + 1}
-                      </option>
+                      <option key={q + 1} value={q + 1}>{q + 1}</option>
                     ))}
                   </select>
                 )}
@@ -221,22 +202,16 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, h
               </div>
 
               {!product.isConfirmed ? (
-                <button className="add-button" onClick={() => confirmProduct(index)}>
-                  Add
-                </button>
+                <button className="add-button" onClick={() => confirmProduct(index)}>Add</button>
               ) : (
-                <button className="remove-product-button" onClick={() => removeProduct(index)}>
-                  Remove
-                </button>
+                <button className="remove-product-button" onClick={() => removeProduct(index)}>Remove</button>
               )}
             </div>
           </div>
         ))}
 
         {newOrder.productList.some(product => product.isConfirmed) && (
-          <button className="add-product-button" onClick={addProduct}>
-            Add More
-          </button>
+          <button className="add-product-button" onClick={addProduct}>Add More</button>
         )}
 
         <div className="input-group">
@@ -262,12 +237,8 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleCreateOrderSaveClick, h
         </div>
 
         <div className="modal-footer">
-          <button className="save-button" onClick={handleCreateOrderSaveClick}>
-            Save
-          </button>
-          <button className="cancel-button" onClick={handleClose}>
-            Cancel
-          </button>
+          <button className="save-button" onClick={handleCreateOrderSaveClick}>Save</button>
+          <button className="cancel-button" onClick={handleClose}>Cancel</button>
         </div>
       </div>
     </div>
