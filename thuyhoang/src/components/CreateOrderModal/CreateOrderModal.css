@@ -1,27 +1,184 @@
+/* Modal overlay */
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal content */
+.modal-content {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+  width: 550px;
+  max-width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Title styling */
+.modal-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Input groups */
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-label {
+  display: block;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+  font-size: 16px;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #56ccf2;
+  box-shadow: 0 0 8px rgba(86, 204, 242, 0.5);
+}
+
+/* Product card styling */
+.product-card {
+  background: #f4f7f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Product field group styling */
+.product-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.product-field-group {
+  flex: 1;
+}
+
+.locked-field {
+  padding: 10px;
+  background: #eaeaea;
+  border-radius: 8px;
+  color: #666;
+  text-align: center;
+}
+
+/* Button styling */
+button {
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-button {
+  background-color: #56ccf2;
+  color: white;
+}
+
+.add-button:hover {
+  background-color: #2f80ed;
+  transform: translateY(-3px);
+}
+
+.remove-product-button {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.remove-product-button:hover {
+  background-color: #ff3b3b;
+  transform: translateY(-3px);
+}
+
+/* Modal footer buttons */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.save-button {
+  background-color: #56ccf2;
+  color: white;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.save-button:hover {
+  background-color: #2f80ed;
+}
+
+.cancel-button {
+  background-color: #d9534f;
+  color: white;
+  flex: 1;
+}
+
+.cancel-button:hover {
+  background-color: #c9302c;
+}
+
+/* Add product button styling */
+.add-product-button {
+  background-color: #5cb85c;
+  color: white;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.add-product-button:hover {
+  background-color: #4cae4c;
+  transform: translateY(-3px);
+}
+
+/* Animation for the modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    width: 500px;
+
+  to {
+    opacity: 1;
   }
-  
-  .product-card {
-    margin-bottom: 10px;
-  }
-  
-  .product-field-group {
-    margin-bottom: 10px;
-  }
-  
+}
