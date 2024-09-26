@@ -105,7 +105,6 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
     }));
   }, [newOrder.productList, loggedInCustomer, setNewOrder]);
 
-  // New function to handle saving the order
   const handleCreateOrderSaveClick = () => {
     const orderWithID = {
       orderID: Math.floor(10000 + Math.random() * 90000).toString(),
@@ -136,13 +135,13 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
       .catch(error => {
         if (error.response) {
           console.error('Server Error:', error.response.data);
-          alert(`Error: ${error.response.status} - ${error.response.data.message}`);
+          alert(`Lỗi: ${error.response.status} - ${error.response.data.message}`);
         } else if (error.request) {
           console.error('Network error, no response received:', error.request);
-          alert('Network error: no response received from the server.');
+          alert('Lỗi mạng: không có phản hồi từ máy chủ.');
         } else {
           console.error('Request Error:', error.message);
-          alert('Error saving the order: ' + error.message);
+          alert('Lỗi khi lưu đơn hàng: ' + error.message);
         }
       });
   };
@@ -150,13 +149,13 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
   return (
     <div className="modal">
       <div className="modal-content">
-        <h3 className="modal-title">Create New Order</h3>
+        <h3 className="modal-title">Tạo Đơn Hàng Mới</h3>
 
         <div className="input-group">
-          <label className="input-label">Customer Name</label>
+          <label className="input-label">Tên Khách Hàng</label>
           <input
             type="text"
-            value={loggedInCustomer?.name ? `Welcome, ${loggedInCustomer.name}` : 'Customer not found'}
+            value={loggedInCustomer?.name ? `Xin chào, ${loggedInCustomer.name}` : 'Không tìm thấy khách hàng'}
             readOnly
             className="input-field"
           />
@@ -166,7 +165,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
           <div key={index} className="product-card">
             <div className="product-row">
               <div className="product-field-group">
-                <label className="input-label">Color</label>
+                <label className="input-label">Màu Sắc</label>
                 {product.isConfirmed ? (
                   <span className="locked-field">{product.color}</span>
                 ) : (
@@ -175,7 +174,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
                     onChange={e => handleProductChange(index, 'color', e.target.value)}
                     className="input-field"
                   >
-                    <option value="" disabled>Select a color</option> {/* Empty default option */}
+                    <option value="" disabled>Chọn màu sắc</option>
                     {uniqueColors.map(color => (
                       <option key={color} value={color}>{color}</option>
                     ))}
@@ -184,7 +183,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
               </div>
 
               <div className="product-field-group">
-                <label className="input-label">Size</label>
+                <label className="input-label">Kích Cỡ</label>
                 {product.isConfirmed ? (
                   <span className="locked-field">{product.size}</span>
                 ) : (
@@ -193,7 +192,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
                     onChange={e => handleProductChange(index, 'size', e.target.value)}
                     className="input-field"
                   >
-                    <option value="" disabled>Select a size</option> {/* Empty default option */}
+                    <option value="" disabled>Chọn kích cỡ</option>
                     {(filteredSizes[product.color] || []).map(size => (
                       <option key={size} value={size}>{size}</option>
                     ))}
@@ -202,7 +201,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
               </div>
 
               <div className="product-field-group">
-                <label className="input-label">Quantity</label>
+                <label className="input-label">Số Lượng</label>
                 {product.isConfirmed ? (
                   <span className="locked-field">{product.quantity}</span>
                 ) : (
@@ -219,20 +218,20 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
               </div>
 
               {!product.isConfirmed ? (
-                <button className="add-button" onClick={() => confirmProduct(index)}>Add</button>
+                <button className="add-button" onClick={() => confirmProduct(index)}>Thêm</button>
               ) : (
-                <button className="remove-product-button" onClick={() => removeProduct(index)}>Remove</button>
+                <button className="remove-product-button" onClick={() => removeProduct(index)}>Xóa</button>
               )}
             </div>
           </div>
         ))}
 
         {newOrder.productList.some(product => product.isConfirmed) && (
-          <button className="add-product-button" onClick={addProduct}>Add More</button>
+          <button className="add-product-button" onClick={addProduct}>Thêm Sản Phẩm</button>
         )}
 
         <div className="input-group">
-          <label className="input-label">Total Quantity</label>
+          <label className="input-label">Tổng Số Lượng</label>
           <input
             type="number"
             name="totalQuantity"
@@ -243,7 +242,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
         </div>
 
         <div className="input-group">
-          <label className="input-label">Total Amount</label>
+          <label className="input-label">Tổng Số Tiền</label>
           <input
             type="number"
             name="total"
@@ -254,8 +253,8 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
         </div>
 
         <div className="modal-footer">
-          <button className="save-button" onClick={handleCreateOrderSaveClick}>Save</button>
-          <button className="cancel-button" onClick={handleClose}>Cancel</button>
+          <button className="save-button" onClick={handleCreateOrderSaveClick}>Lưu</button>
+          <button className="cancel-button" onClick={handleClose}>Hủy</button>
         </div>
       </div>
     </div>

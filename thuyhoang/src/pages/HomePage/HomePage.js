@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import CreateOrderModal from '../../components/CreateOrderModal/CreateOrderModal';
-import './HomePage.css'; // Make sure to link this CSS file
+import './HomePage.css'; // Đảm bảo liên kết với tệp CSS này
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newOrder, setNewOrder] = useState({
-    productList: [{ color: 'Red', size: 30, quantity: 1 }],
+    productList: [{ color: 'Đỏ', size: 30, quantity: 1 }],
   });
   const [orders, setOrders] = useState([]);
   const [customerOrders, setCustomerOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [orderError, setOrderError] = useState(null);
 
-  // Safely parse the logged-in customer from localStorage
+  // Lấy thông tin khách hàng đã đăng nhập từ localStorage
   const loggedInCustomer = useMemo(() => {
     try {
       const storedCustomer = localStorage.getItem('loggedInCustomer');
@@ -21,12 +21,12 @@ const Home = () => {
         return JSON.parse(storedCustomer);
       }
     } catch (e) {
-      console.error('Error parsing loggedInCustomer from localStorage:', e);
+      console.error('Lỗi phân tích khách hàng đăng nhập từ localStorage:', e);
     }
     return null;
   }, []);
 
-  // Fetch all orders and filter those that match the logged-in customer name
+  // Lấy tất cả đơn hàng và lọc các đơn hàng thuộc về khách hàng đã đăng nhập
   useEffect(() => {
     if (loggedInCustomer && loggedInCustomer.name) {
       axios
@@ -45,11 +45,11 @@ const Home = () => {
         })
         .catch((error) => {
           if (error.response) {
-            setOrderError('Error response from server: ' + error.response.status);
+            setOrderError('Lỗi phản hồi từ máy chủ: ' + error.response.status);
           } else if (error.request) {
-            setOrderError('Network error, no response received. Check your network or API.');
+            setOrderError('Lỗi mạng, không nhận được phản hồi. Kiểm tra kết nối mạng hoặc API của bạn.');
           } else {
-            setOrderError('Error in request setup: ' + error.message);
+            setOrderError('Lỗi trong quá trình thiết lập yêu cầu: ' + error.message);
           }
           setLoadingOrders(false);
         });
@@ -57,17 +57,17 @@ const Home = () => {
   }, [loggedInCustomer]);
 
   const handleOrderSaveClick = () => {
-    // Submit order logic
-    console.log('Order saved:', newOrder);
+    // Logic lưu đơn hàng
+    console.log('Đơn hàng đã lưu:', newOrder);
     setIsModalOpen(false);
   };
 
   return (
     <div className="home-page">
       <div className="header-section">
-        <h1>Welcome to Your Order Dashboard</h1>
+        {/* <h1>Chào mừng đến Vải Thuỷ Hoàng</h1> */}
         <button className="create-order-btn" onClick={() => setIsModalOpen(true)}>
-          Create Order
+          Tạo Đơn Hàng
         </button>
       </div>
 
@@ -81,23 +81,23 @@ const Home = () => {
       )}
 
       <div className="orders-section">
-        <h2>Your Orders</h2>
+        <h2>Đơn Hàng Của Bạn</h2>
         {loadingOrders ? (
-          <p className="loading-text">Loading your orders...</p>
+          <p className="loading-text">Đang tải đơn hàng của bạn...</p>
         ) : orderError ? (
           <p className="error-text">{orderError}</p>
         ) : customerOrders.length === 0 ? (
-          <p className="no-orders-text">You have no orders yet.</p>
+          <p className="no-orders-text">Bạn chưa có đơn hàng nào.</p>
         ) : (
           <table className="orders-table">
             <thead>
               <tr>
-                <th>Order ID</th>
-                <th>Product List</th>
-                <th>Total Quantity</th>
-                <th>Total Amount</th>
-                <th>Status</th>
-                <th>Order Date</th>
+                <th>Mã Đơn Hàng</th>
+                <th>Danh Sách Sản Phẩm</th>
+                <th>Tổng Số Lượng</th>
+                <th>Tổng Số Tiền</th>
+                <th>Trạng Thái</th>
+                <th>Ngày Đặt Hàng</th>
               </tr>
             </thead>
             <tbody>

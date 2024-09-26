@@ -10,8 +10,8 @@ const NavBar = () => {
           <h1>Thuỷ Hoàng</h1>
         </div>
         <ul className="navbar-links">
-          <li><Link to="/home">Home</Link></li>
-          <li><Link to="/login">Login</Link></li>
+          <li><Link to="/home">Trang Chủ</Link></li>
+          {/* <li><Link to="/login">Login</Link></li> */}
         </ul>
       </nav>
     </div>

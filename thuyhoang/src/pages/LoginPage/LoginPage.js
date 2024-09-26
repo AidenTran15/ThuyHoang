@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LoginPage.css'; // New CSS styles
+import './LoginPage.css'; // Liên kết tệp CSS mới
 
 const LoginPage = () => {
   const [name, setName] = useState('');
@@ -31,14 +31,14 @@ const LoginPage = () => {
           localStorage.setItem('loggedInCustomer', JSON.stringify(parsedBody.customer));
           navigate('/home');
         } else {
-          setError('Login failed: No customer data found.');
+          setError('Đăng nhập thất bại: Không tìm thấy dữ liệu khách hàng.');
         }
       } else {
         setError(result.error);
         localStorage.removeItem('loggedInCustomer');
       }
     } catch (error) {
-      setError('An error occurred during login.');
+      setError('Đã xảy ra lỗi trong quá trình đăng nhập.');
       localStorage.removeItem('loggedInCustomer');
     }
   };
