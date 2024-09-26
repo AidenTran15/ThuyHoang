@@ -1,0 +1,17 @@
+.footer-wrapper {
+    background-color: #56ccf2;
+    /* Ensure the same background color */
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.footer {
+    max-width: 1200px;
+    /* Center the content */
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}

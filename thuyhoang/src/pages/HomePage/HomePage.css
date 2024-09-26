@@ -1,0 +1,99 @@
+/* General Layout */
+.home-page {
+    padding: 40px;
+    background-color: #f4f7f9;
+    min-height: 100vh;
+}
+
+/* Header Section */
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header-section h1 {
+    font-size: 36px;
+    color: #333;
+    margin: 0;
+}
+
+.create-order-btn {
+    background-color: #56ccf2;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-order-btn:hover {
+    background-color: #2f80ed;
+}
+
+/* Orders Section */
+.orders-section {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.orders-section h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Table Styles */
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.orders-table th {
+    background-color: #56ccf2;
+    color: white;
+}
+
+.orders-table td {
+    background-color: #f8f9fa;
+}
+
+.orders-table tr:nth-child(even) td {
+    background-color: #eef2f6;
+}
+
+.orders-table tr:hover td {
+    background-color: #d3e9f7;
+    transition: background-color 0.3s ease;
+}
+
+/* Loading and Error Text */
+.loading-text,
+.error-text,
+.no-orders-text {
+    font-size: 18px;
+    color: #555;
+    text-align: center;
+}
+
+/* Error Text */
+.error-text {
+    color: #d9534f;
+}
+
+/* No Orders Text */
+.no-orders-text {
+    color: #888;
+}

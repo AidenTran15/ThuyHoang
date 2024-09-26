@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import CreateOrderModal from '../components/CreateOrderModal';
+import CreateOrderModal from '../../components/CreateOrderModal/CreateOrderModal';
+import './HomePage.css'; // Make sure to link this CSS file
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,7 +13,7 @@ const Home = () => {
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [orderError, setOrderError] = useState(null);
 
-  // Use useMemo to safely parse the logged-in customer from localStorage only once
+  // Safely parse the logged-in customer from localStorage
   const loggedInCustomer = useMemo(() => {
     try {
       const storedCustomer = localStorage.getItem('loggedInCustomer');
@@ -28,35 +29,32 @@ const Home = () => {
   // Fetch all orders and filter those that match the logged-in customer name
   useEffect(() => {
     if (loggedInCustomer && loggedInCustomer.name) {
-      axios.get('https://fme5f3bdqi.execute-api.ap-southeast-2.amazonaws.com/prod/get', {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => {
-        const allOrders = JSON.parse(response.data.body); // Parse response body
-        setOrders(allOrders);
-        
-        // Filter orders for the logged-in customer
-        const filteredOrders = allOrders.filter(order => order.Customer === loggedInCustomer.name);
-        setCustomerOrders(filteredOrders);
-        setLoadingOrders(false);
-      })
-      .catch(error => {
-        if (error.response) {
-          console.error('Error response from server:', error.response);
-          setOrderError('Error response from server: ' + error.response.status);
-        } else if (error.request) {
-          console.error('Network error, no response received:', error.request);
-          setOrderError('Network error, no response received. Check your network or API.');
-        } else {
-          console.error('Error in request setup:', error.message);
-          setOrderError('Error in request setup: ' + error.message);
-        }
-        setLoadingOrders(false);
-      });
+      axios
+        .get('https://fme5f3bdqi.execute-api.ap-southeast-2.amazonaws.com/prod/get', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => {
+          const allOrders = JSON.parse(response.data.body);
+          setOrders(allOrders);
+
+          const filteredOrders = allOrders.filter((order) => order.Customer === loggedInCustomer.name);
+          setCustomerOrders(filteredOrders);
+          setLoadingOrders(false);
+        })
+        .catch((error) => {
+          if (error.response) {
+            setOrderError('Error response from server: ' + error.response.status);
+          } else if (error.request) {
+            setOrderError('Network error, no response received. Check your network or API.');
+          } else {
+            setOrderError('Error in request setup: ' + error.message);
+          }
+          setLoadingOrders(false);
+        });
     }
-  }, [loggedInCustomer]); // This will now only run once when loggedInCustomer is calculated
+  }, [loggedInCustomer]);
 
   const handleOrderSaveClick = () => {
     // Submit order logic
@@ -65,11 +63,13 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <h1>Welcome to the Order System</h1>
-
-      {/* Create New Order Button */}
-      <button onClick={() => setIsModalOpen(true)}>Create Order</button>
+    <div className="home-page">
+      <div className="header-section">
+        <h1>Welcome to Your Order Dashboard</h1>
+        <button className="create-order-btn" onClick={() => setIsModalOpen(true)}>
+          Create Order
+        </button>
+      </div>
 
       {isModalOpen && (
         <CreateOrderModal
@@ -80,17 +80,16 @@ const Home = () => {
         />
       )}
 
-      {/* Customer Order Section */}
-      <div className="customer-orders">
+      <div className="orders-section">
         <h2>Your Orders</h2>
         {loadingOrders ? (
-          <p>Loading your orders...</p>
+          <p className="loading-text">Loading your orders...</p>
         ) : orderError ? (
-          <p>{orderError}</p>
+          <p className="error-text">{orderError}</p>
         ) : customerOrders.length === 0 ? (
-          <p>You have no orders yet.</p>
+          <p className="no-orders-text">You have no orders yet.</p>
         ) : (
-          <table>
+          <table className="orders-table">
             <thead>
               <tr>
                 <th>Order ID</th>
