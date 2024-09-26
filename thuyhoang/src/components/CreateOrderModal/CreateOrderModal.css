@@ -21,6 +21,10 @@
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
   width: 550px;
   max-width: 100%;
+  max-height: 80vh;
+  /* Set maximum height for the modal */
+  overflow-y: auto;
+  /* Add vertical scroll when content overflows */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -81,8 +85,7 @@
 .product-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  /* Align items to the bottom */
+  align-items: center;
   gap: 15px;
 }
 
@@ -112,8 +115,6 @@ button {
 .add-button {
   background-color: #56ccf2;
   color: white;
-  margin-left: 10px;
-  /* Added margin for spacing */
 }
 
 .add-button:hover {
