@@ -1,0 +1,83 @@
+/* General Layout */
+.done-orders-page {
+    padding: 40px;
+    min-height: 100vh;
+    background: none;
+}
+
+/* Orders Section */
+.orders-section {
+    padding: 20px;
+}
+
+.orders-section h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Orders Grid - Explicit 3 Columns */
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Order Card Styling */
+.order-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.order-id {
+    font-size: 24px;
+    color: #2f80ed;
+    margin-bottom: 10px;
+}
+
+.order-details p {
+    font-size: 16px;
+    color: #333;
+    margin: 5px 0;
+}
+
+.product-list h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #2f80ed;
+}
+
+.product-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.product-list li {
+    background-color: #f4f7f9;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .orders-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .orders-grid {
+        grid-template-columns: 1fr;
+    }
+}

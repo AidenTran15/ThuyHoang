@@ -11,7 +11,7 @@ const NavBar = () => {
         </div>
         <ul className="navbar-links">
           <li><Link to="/home">Trang Chủ</Link></li>
-          {/* <li><Link to="/login">Login</Link></li> */}
+          <li><Link to="/done-orders">Đơn Hoàn Thành</Link></li> {/* Link to the Done Orders page */}
         </ul>
       </nav>
     </div>
