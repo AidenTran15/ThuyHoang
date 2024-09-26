@@ -81,7 +81,8 @@
 .product-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
+  /* Align items to the bottom */
   gap: 15px;
 }
 
@@ -111,6 +112,8 @@ button {
 .add-button {
   background-color: #56ccf2;
   color: white;
+  margin-left: 10px;
+  /* Added margin for spacing */
 }
 
 .add-button:hover {
