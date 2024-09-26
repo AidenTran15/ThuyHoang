@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import './HomePage.css'; // Hãy đảm bảo cập nhật CSS cho layout mới
+import CreateOrderModal from '../../components/CreateOrderModal/CreateOrderModal'; // Import the modal component
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,7 +56,7 @@ const Home = () => {
 
   const handleOrderSaveClick = () => {
     console.log('Đơn hàng đã lưu:', newOrder);
-    setIsModalOpen(false);
+    setIsModalOpen(false); // Close the modal when saving
   };
 
   return (
@@ -66,6 +67,15 @@ const Home = () => {
           Tạo Đơn Hàng Mới
         </button>
       </div>
+
+      {/* Add the CreateOrderModal component here */}
+      {isModalOpen && (
+        <CreateOrderModal
+          newOrder={newOrder}
+          setNewOrder={setNewOrder}
+          handleClose={() => setIsModalOpen(false)}
+        />
+      )}
 
       <div className="orders-section">
         <h2>Đơn Hàng Của Bạn</h2>
