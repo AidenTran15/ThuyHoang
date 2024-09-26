@@ -135,15 +135,12 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
       })
       .catch(error => {
         if (error.response) {
-          // Server responded with a status other than 200 range
           console.error('Server Error:', error.response.data);
           alert(`Error: ${error.response.status} - ${error.response.data.message}`);
         } else if (error.request) {
-          // No response was received
           console.error('Network error, no response received:', error.request);
           alert('Network error: no response received from the server.');
         } else {
-          // Something happened in setting up the request
           console.error('Request Error:', error.message);
           alert('Error saving the order: ' + error.message);
         }
@@ -203,7 +200,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
               </div>
 
               <div className="product-field-group">
-                <label className="input-label">Quantity (Max: {maxQuantities[`${product.color}-${product.size}`] || 0})</label>
+                <label className="input-label">Quantity</label>
                 {product.isConfirmed ? (
                   <span className="locked-field">{product.quantity}</span>
                 ) : (
@@ -217,11 +214,6 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
                     ))}
                   </select>
                 )}
-              </div>
-
-              <div className="product-field-group">
-                <label className="input-label">Product ID</label>
-                <span>{productIDs[`${product.color}-${product.size}`] || 'N/A'}</span>
               </div>
 
               {!product.isConfirmed ? (
