@@ -48,52 +48,59 @@
     margin-bottom: 20px;
 }
 
-/* Table Styles */
-.orders-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+/* Orders Grid */
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
 }
 
-.orders-table th,
-.orders-table td {
-    padding: 12px 15px;
-    text-align: left;
+/* Order Card Styling */
+.order-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.orders-table th {
-    background-color: #56ccf2;
-    color: white;
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.orders-table td {
-    background-color: #f8f9fa;
+.order-id {
+    font-size: 24px;
+    color: #2f80ed;
+    margin-bottom: 10px;
 }
 
-.orders-table tr:nth-child(even) td {
-    background-color: #eef2f6;
+.order-details {
+    margin-bottom: 15px;
 }
 
-.orders-table tr:hover td {
-    background-color: #d3e9f7;
-    transition: background-color 0.3s ease;
+.order-details p {
+    font-size: 16px;
+    color: #333;
+    margin: 5px 0;
 }
 
-/* Loading and Error Text */
-.loading-text,
-.error-text,
-.no-orders-text {
+.product-list h4 {
+    margin-bottom: 10px;
     font-size: 18px;
-    color: #555;
-    text-align: center;
+    color: #2f80ed;
 }
 
-/* Error Text */
-.error-text {
-    color: #d9534f;
+.product-list ul {
+    list-style: none;
+    padding: 0;
 }
 
-/* No Orders Text */
-.no-orders-text {
-    color: #888;
+.product-list li {
+    background-color: #f4f7f9;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #333;
 }

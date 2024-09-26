@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import CreateOrderModal from '../../components/CreateOrderModal/CreateOrderModal';
-import './HomePage.css'; // Đảm bảo liên kết với tệp CSS này
+import './HomePage.css'; // Hãy đảm bảo cập nhật CSS cho layout mới
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,7 +12,6 @@ const Home = () => {
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [orderError, setOrderError] = useState(null);
 
-  // Lấy thông tin khách hàng đã đăng nhập từ localStorage
   const loggedInCustomer = useMemo(() => {
     try {
       const storedCustomer = localStorage.getItem('loggedInCustomer');
@@ -21,12 +19,11 @@ const Home = () => {
         return JSON.parse(storedCustomer);
       }
     } catch (e) {
-      console.error('Lỗi phân tích khách hàng đăng nhập từ localStorage:', e);
+      console.error('Lỗi khi phân tích loggedInCustomer từ localStorage:', e);
     }
     return null;
   }, []);
 
-  // Lấy tất cả đơn hàng và lọc các đơn hàng thuộc về khách hàng đã đăng nhập
   useEffect(() => {
     if (loggedInCustomer && loggedInCustomer.name) {
       axios
@@ -47,9 +44,9 @@ const Home = () => {
           if (error.response) {
             setOrderError('Lỗi phản hồi từ máy chủ: ' + error.response.status);
           } else if (error.request) {
-            setOrderError('Lỗi mạng, không nhận được phản hồi. Kiểm tra kết nối mạng hoặc API của bạn.');
+            setOrderError('Lỗi mạng, không có phản hồi. Vui lòng kiểm tra mạng hoặc API của bạn.');
           } else {
-            setOrderError('Lỗi trong quá trình thiết lập yêu cầu: ' + error.message);
+            setOrderError('Lỗi trong việc thiết lập yêu cầu: ' + error.message);
           }
           setLoadingOrders(false);
         });
@@ -57,7 +54,6 @@ const Home = () => {
   }, [loggedInCustomer]);
 
   const handleOrderSaveClick = () => {
-    // Logic lưu đơn hàng
     console.log('Đơn hàng đã lưu:', newOrder);
     setIsModalOpen(false);
   };
@@ -65,20 +61,11 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="header-section">
-        {/* <h1>Chào mừng đến Vải Thuỷ Hoàng</h1> */}
+        <h1>Chào Mừng Đến Với Bảng Quản Lý Đơn Hàng</h1>
         <button className="create-order-btn" onClick={() => setIsModalOpen(true)}>
-          Tạo Đơn Hàng
+          Tạo Đơn Hàng Mới
         </button>
       </div>
-
-      {isModalOpen && (
-        <CreateOrderModal
-          newOrder={newOrder}
-          setNewOrder={setNewOrder}
-          handleCreateOrderSaveClick={handleOrderSaveClick}
-          handleClose={() => setIsModalOpen(false)}
-        />
-      )}
 
       <div className="orders-section">
         <h2>Đơn Hàng Của Bạn</h2>
@@ -89,38 +76,29 @@ const Home = () => {
         ) : customerOrders.length === 0 ? (
           <p className="no-orders-text">Bạn chưa có đơn hàng nào.</p>
         ) : (
-          <table className="orders-table">
-            <thead>
-              <tr>
-                <th>Mã Đơn Hàng</th>
-                <th>Danh Sách Sản Phẩm</th>
-                <th>Tổng Số Lượng</th>
-                <th>Tổng Số Tiền</th>
-                <th>Trạng Thái</th>
-                <th>Ngày Đặt Hàng</th>
-              </tr>
-            </thead>
-            <tbody>
-              {customerOrders.map((order, index) => (
-                <tr key={index}>
-                  <td>{order.orderID}</td>
-                  <td>
-                    <ul>
-                      {order.ProductList.map((product, i) => (
-                        <li key={i}>
-                          {product.color} {product.size} - {product.quantity}
-                        </li>
-                      ))}
-                    </ul>
-                  </td>
-                  <td>{order.TotalQuantity}</td>
-                  <td>{order.Total}</td>
-                  <td>{order.Status}</td>
-                  <td>{order.OrderDate}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="orders-grid">
+            {customerOrders.map((order, index) => (
+              <div key={index} className="order-card">
+                <h3 className="order-id">Đơn Hàng #{order.orderID}</h3>
+                <div className="order-details">
+                  <p><strong>Ngày Đặt Hàng:</strong> {order.OrderDate}</p>
+                  <p><strong>Tổng Số Lượng:</strong> {order.TotalQuantity}</p>
+                  <p><strong>Tổng Giá Trị:</strong> {order.Total}</p>
+                  <p><strong>Trạng Thái:</strong> {order.Status}</p>
+                </div>
+                <div className="product-list">
+                  <h4>Sản Phẩm:</h4>
+                  <ul>
+                    {order.ProductList.map((product, i) => (
+                      <li key={i}>
+                        {product.color} {product.size} - {product.quantity}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
