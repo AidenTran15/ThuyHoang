@@ -1,22 +1,25 @@
 /* General Layout */
 .home-page {
     padding: 40px;
-    background-color: #f4f7f9;
     min-height: 100vh;
+    background: none;
 }
 
-/* Header Section */
-.header-section {
+/* Orders Section */
+.orders-section {
+    padding: 20px;
+}
+
+.orders-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
-.header-section h1 {
-    font-size: 36px;
+.orders-section h2 {
+    font-size: 28px;
     color: #333;
-    margin: 0;
 }
 
 .create-order-btn {
@@ -34,24 +37,11 @@
     background-color: #2f80ed;
 }
 
-/* Orders Section */
-.orders-section {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.orders-section h2 {
-    font-size: 28px;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* Orders Grid */
+/* Orders Grid - Explicit 3 Columns */
 .orders-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
+    /* Explicitly set 3 columns */
     gap: 20px;
 }
 
@@ -103,4 +93,38 @@
     margin-bottom: 5px;
     font-size: 16px;
     color: #333;
+}
+
+/* Loading and Error Styles */
+.loading-text,
+.error-text,
+.no-orders-text {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .orders-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columns on smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .orders-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .create-order-btn {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .orders-grid {
+        grid-template-columns: 1fr;
+        /* 1 column on mobile screens */
+    }
 }

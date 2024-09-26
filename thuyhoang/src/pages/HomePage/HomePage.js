@@ -61,24 +61,14 @@ const Home = () => {
 
   return (
     <div className="home-page">
-      <div className="header-section">
-        <h1>Chào Mừng Đến Với Bảng Quản Lý Đơn Hàng</h1>
-        <button className="create-order-btn" onClick={() => setIsModalOpen(true)}>
-          Tạo Đơn Hàng Mới
-        </button>
-      </div>
-
-      {/* Add the CreateOrderModal component here */}
-      {isModalOpen && (
-        <CreateOrderModal
-          newOrder={newOrder}
-          setNewOrder={setNewOrder}
-          handleClose={() => setIsModalOpen(false)}
-        />
-      )}
-
+      {/* Removed the header section containing Chào Mừng Đến */}
       <div className="orders-section">
-        <h2>Đơn Hàng Của Bạn</h2>
+        <div className="orders-header">
+          <h2>Đơn Hàng Của Bạn</h2>
+          <button className="create-order-btn" onClick={() => setIsModalOpen(true)}>
+            Tạo Đơn Hàng Mới
+          </button>
+        </div>
         {loadingOrders ? (
           <p className="loading-text">Đang tải đơn hàng của bạn...</p>
         ) : orderError ? (
@@ -111,6 +101,15 @@ const Home = () => {
           </div>
         )}
       </div>
+
+      {/* Add the CreateOrderModal component here */}
+      {isModalOpen && (
+        <CreateOrderModal
+          newOrder={newOrder}
+          setNewOrder={setNewOrder}
+          handleClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
