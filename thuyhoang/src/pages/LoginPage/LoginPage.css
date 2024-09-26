@@ -28,6 +28,7 @@ body {
     box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2);
     width: 450px;
     max-width: 100%;
+    min-width: 320px;
     backdrop-filter: blur(8px);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-top: -30px;
@@ -125,4 +126,46 @@ body {
     text-align: center;
     margin-top: 20px;
     font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-container {
+        width: 90%;
+        /* Increased width for mobile screens */
+        padding: 30px 20px;
+    }
+
+    .login-title {
+        font-size: 28px;
+    }
+
+    .login-input {
+        font-size: 14px;
+    }
+
+    .login-button {
+        font-size: 16px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        width: 90%;
+        padding: 20px 15px;
+    }
+
+    .login-title {
+        font-size: 24px;
+    }
+
+    .login-input {
+        font-size: 12px;
+    }
+
+    .login-button {
+        font-size: 14px;
+        padding: 10px;
+    }
 }
