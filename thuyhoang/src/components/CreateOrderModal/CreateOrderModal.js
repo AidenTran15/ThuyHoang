@@ -70,7 +70,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
       ...prev,
       productList: [
         ...prev.productList,
-        { color: uniqueColors[0] || 'red', size: 30, quantity: 1, isConfirmed: false },
+        { color: '', size: '', quantity: 1, isConfirmed: false }, // Set color to empty by default
       ],
     }));
   };
@@ -146,7 +146,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
         }
       });
   };
-  
+
   return (
     <div className="modal">
       <div className="modal-content">
@@ -175,6 +175,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
                     onChange={e => handleProductChange(index, 'color', e.target.value)}
                     className="input-field"
                   >
+                    <option value="" disabled>Select a color</option> {/* Empty default option */}
                     {uniqueColors.map(color => (
                       <option key={color} value={color}>{color}</option>
                     ))}
@@ -192,6 +193,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
                     onChange={e => handleProductChange(index, 'size', e.target.value)}
                     className="input-field"
                   >
+                    <option value="" disabled>Select a size</option> {/* Empty default option */}
                     {(filteredSizes[product.color] || []).map(size => (
                       <option key={size} value={size}>{size}</option>
                     ))}
