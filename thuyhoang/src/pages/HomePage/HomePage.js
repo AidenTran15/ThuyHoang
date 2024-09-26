@@ -9,7 +9,7 @@ const Home = () => {
     productList: [{ color: 'Đỏ', size: 30, quantity: 1 }],
   });
   const [orders, setOrders] = useState([]);
-  const [customerOrders, setCustomerOrders] = useState([]);
+  const [pendingOrders, setPendingOrders] = useState([]); // State for Pending orders
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [orderError, setOrderError] = useState(null);
 
@@ -37,8 +37,11 @@ const Home = () => {
           const allOrders = JSON.parse(response.data.body);
           setOrders(allOrders);
 
-          const filteredOrders = allOrders.filter((order) => order.Customer === loggedInCustomer.name);
-          setCustomerOrders(filteredOrders);
+          // Filter for pending orders only
+          const filteredPendingOrders = allOrders.filter(
+            (order) => order.Customer === loggedInCustomer.name && order.Status === 'Pending'
+          );
+          setPendingOrders(filteredPendingOrders);
           setLoadingOrders(false);
         })
         .catch((error) => {
@@ -73,11 +76,11 @@ const Home = () => {
           <p className="loading-text">Đang tải đơn hàng của bạn...</p>
         ) : orderError ? (
           <p className="error-text">{orderError}</p>
-        ) : customerOrders.length === 0 ? (
-          <p className="no-orders-text">Bạn chưa có đơn hàng nào.</p>
+        ) : pendingOrders.length === 0 ? (
+          <p className="no-orders-text">Bạn chưa có đơn hàng nào đang chờ xử lý.</p>
         ) : (
           <div className="orders-grid">
-            {customerOrders.map((order, index) => (
+            {pendingOrders.map((order, index) => (
               <div key={index} className="order-card">
                 <h3 className="order-id">Đơn Hàng #{order.orderID}</h3>
                 <div className="order-details">
