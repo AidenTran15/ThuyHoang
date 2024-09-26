@@ -1,16 +1,16 @@
 /* General Layout */
-.done-orders-page {
+.done-orders-page-od {
     padding: 40px;
     min-height: 100vh;
     background: none;
 }
 
 /* Orders Section */
-.orders-section {
+.orders-section-od {
     padding: 20px;
 }
 
-.orders-section h2 {
+.orders-section-od h2 {
     font-size: 28px;
     color: #333;
     margin-bottom: 20px;
@@ -80,4 +80,10 @@
     .orders-grid {
         grid-template-columns: 1fr;
     }
+
+    .orders-section-od {
+        padding: 20px;
+        margin-top: 550px;
+    }
+
 }

@@ -51,8 +51,8 @@ const DoneOrders = () => {
   }, [loggedInCustomer]);
 
   return (
-    <div className="done-orders-page">
-      <div className="orders-section">
+    <div className="done-orders-page-od">
+      <div className="orders-section-od">
         <h2>Đơn Hàng Đã Hoàn Thành</h2>
         {loadingOrders ? (
           <p className="loading-text">Đang tải đơn hàng đã hoàn thành...</p>

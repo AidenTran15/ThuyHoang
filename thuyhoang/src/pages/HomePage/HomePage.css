@@ -1,12 +1,12 @@
 /* General Layout */
 .home-page {
     padding: 100px 40px 100px;
-    /* Increased top and bottom padding */
     min-height: 100vh;
     background: none;
     margin-top: 350px;
     margin-bottom: 120px;
 }
+
 
 /* Orders Section */
 .orders-section {
@@ -115,7 +115,19 @@
     }
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
+    .home-page {
+        margin-top: 450px !important;
+        padding-top: 550px;
+        /* This ensures padding-top is also applied correctly */
+    }
+
+    .orders-section {
+        padding: 20px;
+        margin-top: 850px
+    }
+
     .orders-header {
         flex-direction: column;
         text-align: center;
