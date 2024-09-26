@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
-/* New font */
+/* Keeping the Montserrat font */
 
 /* General Styling */
 body {
     font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(135deg, #34e89e 0%, #0f3443 100%);
+    background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+    /* Light blue gradient background */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +24,6 @@ body {
 .login-container {
     background: rgba(255, 255, 255, 0.85);
     padding: 40px 30px;
-    /* Reduced padding for a sleeker look */
     border-radius: 15px;
     box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2);
     width: 450px;
@@ -31,7 +31,6 @@ body {
     backdrop-filter: blur(8px);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-top: -30px;
-    /* Move the container up */
 }
 
 .login-container:hover {
@@ -43,33 +42,28 @@ body {
 .login-title {
     text-align: center;
     font-size: 34px;
-    /* Large size but less bold for a softer look */
     font-weight: 800;
-    /* Extra bold using Montserrat */
     margin-bottom: 15px;
-    /* Less margin to move it up */
     color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    background: -webkit-linear-gradient(45deg, #11998e, #38ef7d);
-    /* New green-blue gradient */
+    background: -webkit-linear-gradient(45deg, #56ccf2, #2f80ed);
+    /* Light blue gradient for the title */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     position: relative;
     top: -20px;
-    /* Moves the title up */
     font-family: 'Montserrat', sans-serif;
-    /* Use Montserrat */
 }
 
-/* Add a subtle shadow effect for the title */
+/* Adding a subtle line under the title */
 .login-title::after {
     content: "";
     display: block;
     height: 3px;
     width: 70px;
-    background-color: #38ef7d;
-    /* Green shadow under the title */
+    background-color: #56ccf2;
+    /* Light blue line under the title */
     margin: 10px auto 0 auto;
     border-radius: 5px;
 }
@@ -99,12 +93,15 @@ body {
 
 .login-input:focus {
     outline: none;
-    border-color: #34e89e;
-    box-shadow: 0 0 8px rgba(52, 232, 158, 0.5);
+    border-color: #56ccf2;
+    /* Light blue border */
+    box-shadow: 0 0 8px rgba(86, 204, 242, 0.5);
+    /* Light blue shadow */
 }
 
 .login-button {
-    background-color: #34e89e;
+    background-color: #56ccf2;
+    /* Light blue button */
     color: white;
     padding: 15px;
     border: none;
@@ -118,7 +115,8 @@ body {
 }
 
 .login-button:hover {
-    background-color: #2bb58e;
+    background-color: #2f80ed;
+    /* Darker blue on hover */
     transform: translateY(-5px);
 }
 
