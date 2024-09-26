@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './NavBar.css';
 
 const NavBar = () => {
+  const location = useLocation();
+
   return (
     <div className="navbar-wrapper">
       <nav className="navbar">
@@ -10,8 +12,14 @@ const NavBar = () => {
           <h1>Thuỷ Hoàng</h1>
         </div>
         <ul className="navbar-links">
-          <li><Link to="/home">Trang Chủ</Link></li>
-          <li><Link to="/done-orders">Đơn Hoàn Thành</Link></li> {/* Link to the Done Orders page */}
+          {/* Only show Trang Chủ if we are not on the home page */}
+          {location.pathname !== '/home' && (
+            <li><Link to="/home">Trang Chủ</Link></li>
+          )}
+          {/* Only show Đơn Hoàn Thành if we are not on the done-orders page */}
+          {location.pathname !== '/done-orders' && (
+            <li><Link to="/done-orders">Đơn Hoàn Thành</Link></li>
+          )}
         </ul>
       </nav>
     </div>
