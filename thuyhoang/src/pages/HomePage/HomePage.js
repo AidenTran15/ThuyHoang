@@ -25,6 +25,11 @@ const Home = () => {
     return null;
   }, []);
 
+  // Function to scroll to top of the page
+  const scrollToTop = () => {
+    document.getElementById('main-content')?.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Function to load orders
   const loadOrders = () => {
     if (loggedInCustomer && loggedInCustomer.name) {
@@ -44,6 +49,7 @@ const Home = () => {
           );
           setPendingOrders(filteredPendingOrders);
           setLoadingOrders(false);
+          scrollToTop(); // Scroll to the top after loading orders
         })
         .catch((error) => {
           if (error.response) {
@@ -64,60 +70,68 @@ const Home = () => {
   }, [loggedInCustomer]);
 
   return (
-    <div className="home-page">
-      <div className="orders-section">
-        <div className="orders-header">
-          <h2>Đơn Hàng Của Bạn</h2>
-          <button className="create-order-btn" onClick={() => setIsModalOpen(true)}>
-            Tạo Đơn Hàng Mới
-          </button>
-        </div>
-        {loadingOrders ? (
-          <p className="loading-text">Đang tải đơn hàng của bạn...</p>
-        ) : orderError ? (
-          <p className="error-text">{orderError}</p>
-        ) : pendingOrders.length === 0 ? (
-          <p className="no-orders-text">Bạn chưa có đơn hàng nào đang chờ xử lý.</p>
-        ) : (
-          <div className="orders-grid">
-            {pendingOrders.map((order, index) => (
-              <div key={index} className="order-card">
-                <h3 className="order-id">Đơn Hàng #{order.orderID}</h3>
-                <div className="order-details">
-                  <p><strong>Ngày Đặt Hàng:</strong> <span className="order-info">{order.OrderDate}</span></p>
-                  <p><strong>Tổng Số Lượng:</strong> <span className="order-info">{order.TotalQuantity}</span></p>
-                  <p><strong>Tổng Giá Trị:</strong> <span className="order-info">{order.Total}</span></p>
-                  <p><strong>Trạng Thái:</strong> <span className="order-info">{order.Status}</span></p>
-                </div>
-
-                <div className="product-list">
-                  <h4>Sản Phẩm:</h4>
-                  <ul>
-                    {order.ProductList.map((product, i) => (
-                      <li key={i}>
-                        {product.color} {product.size} - {product.quantity}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
+    <div id="main-content" className="main-content">
+      <div className="home-page">
+        <div className="orders-section">
+          <div className="orders-header">
+            <h2>Đơn Hàng Của Bạn</h2>
+            <button
+              className="create-order-btn"
+              onClick={() => {
+                setIsModalOpen(true);
+                scrollToTop(); // Scroll to the top when opening the modal
+              }}
+            >
+              Tạo Đơn Hàng Mới
+            </button>
           </div>
+          {loadingOrders ? (
+            <p className="loading-text">Đang tải đơn hàng của bạn...</p>
+          ) : orderError ? (
+            <p className="error-text">{orderError}</p>
+          ) : pendingOrders.length === 0 ? (
+            <p className="no-orders-text">Bạn chưa có đơn hàng nào đang chờ xử lý.</p>
+          ) : (
+            <div className="orders-grid">
+              {pendingOrders.map((order, index) => (
+                <div key={index} className="order-card">
+                  <h3 className="order-id">Đơn Hàng #{order.orderID}</h3>
+                  <div className="order-details">
+                    <p><strong>Ngày Đặt Hàng:</strong> <span className="order-info">{order.OrderDate}</span></p>
+                    <p><strong>Tổng Số Lượng:</strong> <span className="order-info">{order.TotalQuantity}</span></p>
+                    <p><strong>Tổng Giá Trị:</strong> <span className="order-info">{order.Total}</span></p>
+                    <p><strong>Trạng Thái:</strong> <span className="order-info">{order.Status}</span></p>
+                  </div>
+
+                  <div className="product-list">
+                    <h4>Sản Phẩm:</h4>
+                    <ul>
+                      {order.ProductList.map((product, i) => (
+                        <li key={i}>
+                          {product.color} {product.size} - {product.quantity}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {isModalOpen && (
+          <CreateOrderModal
+            newOrder={newOrder}
+            setNewOrder={setNewOrder}
+            setOrders={setOrders}
+            orders={orders}
+            handleClose={() => {
+              setIsModalOpen(false);
+              loadOrders();  // Refresh orders after closing the modal
+            }}
+          />
         )}
       </div>
-
-      {isModalOpen && (
-        <CreateOrderModal
-          newOrder={newOrder}
-          setNewOrder={setNewOrder}
-          setOrders={setOrders}
-          orders={orders}
-          handleClose={() => {
-            setIsModalOpen(false);
-            loadOrders();  // Refresh orders after closing the modal
-          }}
-        />
-      )}
     </div>
   );
 };

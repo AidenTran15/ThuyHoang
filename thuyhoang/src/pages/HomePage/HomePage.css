@@ -1,15 +1,27 @@
+/* Wrapper Container */
+.main-content {
+    height: 100vh;
+    /* Full height of the viewport */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    overflow-x: hidden;
+    /* Prevent horizontal scrolling */
+}
+
 /* General Layout */
 .home-page {
-    padding: 100px 40px 100px;
-    min-height: 100vh;
+    padding: 100px 40px;
+    margin: 0;
+    height: auto;
     background: none;
-    margin-top: 250px;
-    margin-bottom: 120px;
+
 }
 
 /* Orders Section */
 .orders-section {
     padding: 20px;
+
+    /* Remove extra margin */
 }
 
 .orders-header {
@@ -17,6 +29,8 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    margin-top: 0;
+    /* Remove extra margin */
 }
 
 .orders-section h2 {
@@ -131,15 +145,8 @@
 }
 
 @media (max-width: 768px) {
-    .home-page {
-        margin-top: 220px !important;
-        padding-top: 550px;
-    }
 
-    .orders-section {
-        padding: 20px;
-        margin-top: 50px;
-    }
+
 
     .orders-header {
         flex-direction: column;
