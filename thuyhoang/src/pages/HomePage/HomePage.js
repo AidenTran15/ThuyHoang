@@ -84,11 +84,12 @@ const Home = () => {
               <div key={index} className="order-card">
                 <h3 className="order-id">Đơn Hàng #{order.orderID}</h3>
                 <div className="order-details">
-                  <p><strong>Ngày Đặt Hàng:</strong> {order.OrderDate}</p>
-                  <p><strong>Tổng Số Lượng:</strong> {order.TotalQuantity}</p>
-                  <p><strong>Tổng Giá Trị:</strong> {order.Total}</p>
-                  <p><strong>Trạng Thái:</strong> {order.Status}</p>
+                  <p><strong>Ngày Đặt Hàng:</strong> <span className="order-info">{order.OrderDate}</span></p>
+                  <p><strong>Tổng Số Lượng:</strong> <span className="order-info">{order.TotalQuantity}</span></p>
+                  <p><strong>Tổng Giá Trị:</strong> <span className="order-info">{order.Total}</span></p>
+                  <p><strong>Trạng Thái:</strong> <span className="order-info">{order.Status}</span></p>
                 </div>
+
                 <div className="product-list">
                   <h4>Sản Phẩm:</h4>
                   <ul>

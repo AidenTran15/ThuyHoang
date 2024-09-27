@@ -7,7 +7,6 @@
     margin-bottom: 120px;
 }
 
-
 /* Orders Section */
 .orders-section {
     padding: 20px;
@@ -44,7 +43,6 @@
 .orders-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /* Explicitly set 3 columns */
     gap: 20px;
 }
 
@@ -68,16 +66,34 @@
     margin-bottom: 10px;
 }
 
+/* Order Details Styling */
 .order-details {
     margin-bottom: 15px;
 }
 
-.order-details p {
-    font-size: 16px;
-    color: #333;
-    margin: 5px 0;
+/* Styling for values inside .order-info */
+.order-info {
+    font-size: 16px !important;
+    /* Normal font size */
+    color: #333 !important;
+    /* Normal text color */
+    padding: 4px 8px !important;
+    /* Add padding to make it stand out */
+    border-radius: 5px !important;
+    /* Rounded corners */
+    background-color: #f4f7f9 !important;
+    /* Background similar to product list */
+    font-weight: normal !important;
+    /* Ensure value text is not bold */
+    display: inline-block !important;
+    /* Display inline */
+    margin-left: 10px !important;
+    /* Add space between the label and value */
+    line-height: 1.6 !important;
+    /* Ensure line height matches */
 }
 
+/* Product List Styling */
 .product-list h4 {
     margin-bottom: 10px;
     font-size: 18px;
@@ -111,21 +127,18 @@
 @media (max-width: 1024px) {
     .orders-grid {
         grid-template-columns: repeat(2, 1fr);
-        /* 2 columns on smaller screens */
     }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .home-page {
         margin-top: 450px !important;
         padding-top: 550px;
-        /* This ensures padding-top is also applied correctly */
     }
 
     .orders-section {
         padding: 20px;
-        margin-top: 850px
+        margin-top: 850px;
     }
 
     .orders-header {
@@ -140,6 +153,5 @@
 
     .orders-grid {
         grid-template-columns: 1fr;
-        /* 1 column on mobile screens */
     }
 }
