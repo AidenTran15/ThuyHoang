@@ -157,7 +157,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
           <label className="input-label">Tên Khách Hàng</label>
           <input
             type="text"
-            value={loggedInCustomer?.name ? `Xin chào, ${loggedInCustomer.name}` : 'Không tìm thấy khách hàng'}
+            value={loggedInCustomer?.name ? `${loggedInCustomer.name}` : 'Không tìm thấy khách hàng'}
             readOnly
             className="input-field"
           />

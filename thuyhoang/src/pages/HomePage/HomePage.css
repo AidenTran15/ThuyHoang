@@ -3,7 +3,7 @@
     padding: 100px 40px 100px;
     min-height: 100vh;
     background: none;
-    margin-top: 350px;
+    margin-top: 250px;
     margin-bottom: 120px;
 }
 
@@ -132,13 +132,13 @@
 
 @media (max-width: 768px) {
     .home-page {
-        margin-top: 450px !important;
+        margin-top: 220px !important;
         padding-top: 550px;
     }
 
     .orders-section {
         padding: 20px;
-        margin-top: 850px;
+        margin-top: 50px;
     }
 
     .orders-header {
