@@ -68,7 +68,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
       ...prev,
       productList: [
         ...prev.productList,
-        { color: '', size: '', quantity: 1, isConfirmed: false },
+        { color: '', size: '', quantity: '', isConfirmed: false },
       ],
     }));
   };
@@ -176,7 +176,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
                     onChange={e => handleProductChange(index, 'color', e.target.value)}
                     className="input-field"
                   >
-                    <option value="" disabled>Chọn màu sắc</option>
+                    <option value="">Chọn màu sắc</option>
                     {uniqueColors.map(color => (
                       <option key={color} value={color}>{color}</option>
                     ))}
@@ -194,7 +194,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
                     onChange={e => handleProductChange(index, 'size', e.target.value)}
                     className="input-field"
                   >
-                    <option value="" disabled>Chọn kích cỡ</option>
+                    <option value="">Chọn kích cỡ</option>
                     {(filteredSizes[product.color] || []).map(size => (
                       <option key={size} value={size}>{size}</option>
                     ))}
@@ -212,6 +212,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
                     onChange={e => handleProductChange(index, 'quantity', e.target.value)}
                     className="input-field"
                   >
+                    <option value="">Chọn số lượng</option>
                     {[...Array(maxQuantities[`${product.color}-${product.size}`] || 0).keys()].map(q => (
                       <option key={q + 1} value={q + 1}>{q + 1}</option>
                     ))}
