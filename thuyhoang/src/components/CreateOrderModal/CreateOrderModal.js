@@ -2,20 +2,18 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './CreateOrderModal.css';
 
-const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
+const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, orders }) => {
   const [uniqueColors, setUniqueColors] = useState([]);
   const [filteredSizes, setFilteredSizes] = useState({});
   const [products, setProducts] = useState([]);
   const [maxQuantities, setMaxQuantities] = useState({});
   const [productIDs, setProductIDs] = useState({});
 
-  // Safely parse the logged-in customer from localStorage
   const loggedInCustomer = (() => {
     try {
       const storedCustomer = localStorage.getItem('loggedInCustomer');
       if (storedCustomer && storedCustomer !== 'undefined') {
-        const parsedCustomer = JSON.parse(storedCustomer);
-        return parsedCustomer;
+        return JSON.parse(storedCustomer);
       }
     } catch (e) {
       console.error('Error parsing loggedInCustomer from localStorage:', e);
@@ -70,7 +68,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
       ...prev,
       productList: [
         ...prev.productList,
-        { color: '', size: '', quantity: 1, isConfirmed: false }, // Set color to empty by default
+        { color: '', size: '', quantity: 1, isConfirmed: false },
       ],
     }));
   };
@@ -120,16 +118,20 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose }) => {
       status: 'Pending',
       orderDate: new Date().toISOString().replace('T', ' ').substring(0, 16)
     };
-  
+
     const requestBody = JSON.stringify({
       body: JSON.stringify(orderWithID)
     });
-  
+
     axios.post('https://n73lcvb962.execute-api.ap-southeast-2.amazonaws.com/prod/add', requestBody, {
       headers: { 'Content-Type': 'application/json' }
     })
       .then(response => {
         console.log('Order saved successfully:', response.data);
+        
+        // Update the orders state instantly
+        setOrders([orderWithID, ...orders]);
+        
         handleClose();  // Close the modal after saving
       })
       .catch(error => {

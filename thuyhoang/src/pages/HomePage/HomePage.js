@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import './HomePage.css'; // Hãy đảm bảo cập nhật CSS cho layout mới
-import CreateOrderModal from '../../components/CreateOrderModal/CreateOrderModal'; // Import the modal component
+import './HomePage.css';
+import CreateOrderModal from '../../components/CreateOrderModal/CreateOrderModal';
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -9,7 +9,7 @@ const Home = () => {
     productList: [{ color: 'Đỏ', size: 30, quantity: 1 }],
   });
   const [orders, setOrders] = useState([]);
-  const [pendingOrders, setPendingOrders] = useState([]); // State for Pending orders
+  const [pendingOrders, setPendingOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [orderError, setOrderError] = useState(null);
 
@@ -25,7 +25,8 @@ const Home = () => {
     return null;
   }, []);
 
-  useEffect(() => {
+  // Function to load orders
+  const loadOrders = () => {
     if (loggedInCustomer && loggedInCustomer.name) {
       axios
         .get('https://fme5f3bdqi.execute-api.ap-southeast-2.amazonaws.com/prod/get', {
@@ -55,16 +56,15 @@ const Home = () => {
           setLoadingOrders(false);
         });
     }
-  }, [loggedInCustomer]);
-
-  const handleOrderSaveClick = () => {
-    console.log('Đơn hàng đã lưu:', newOrder);
-    setIsModalOpen(false); // Close the modal when saving
   };
+
+  // Load orders when the component is mounted
+  useEffect(() => {
+    loadOrders();
+  }, [loggedInCustomer]);
 
   return (
     <div className="home-page">
-      {/* Removed the header section containing Chào Mừng Đến */}
       <div className="orders-section">
         <div className="orders-header">
           <h2>Đơn Hàng Của Bạn</h2>
@@ -105,12 +105,16 @@ const Home = () => {
         )}
       </div>
 
-      {/* Add the CreateOrderModal component here */}
       {isModalOpen && (
         <CreateOrderModal
           newOrder={newOrder}
           setNewOrder={setNewOrder}
-          handleClose={() => setIsModalOpen(false)}
+          setOrders={setOrders}
+          orders={orders}
+          handleClose={() => {
+            setIsModalOpen(false);
+            loadOrders();  // Refresh orders after closing the modal
+          }}
         />
       )}
     </div>
