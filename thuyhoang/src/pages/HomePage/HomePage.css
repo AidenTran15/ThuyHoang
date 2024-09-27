@@ -10,18 +10,18 @@
 
 /* General Layout */
 .home-page {
-    padding: 100px 40px;
+    padding: 50px 40px;
+    /* Reduced top padding to move the section up */
     margin: 0;
     height: auto;
     background: none;
-
 }
 
 /* Orders Section */
 .orders-section {
     padding: 20px;
-
-    /* Remove extra margin */
+    margin-top: 0;
+    /* Remove margin or set a smaller value if needed */
 }
 
 .orders-header {
@@ -145,8 +145,15 @@
 }
 
 @media (max-width: 768px) {
+    .home-page {
+        margin-top: 220px !important;
+        padding-top: 550px;
+    }
 
-
+    .orders-section {
+        padding: 20px;
+        margin-top: 50px;
+    }
 
     .orders-header {
         flex-direction: column;
