@@ -1,16 +1,31 @@
 /* General Layout */
 .done-orders-page-od {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     padding: 40px;
     min-height: 100vh;
     background: none;
+    overflow: hidden;
+    /* Prevent overall page scroll */
+}
+
+/* Scrollable Container */
+.orders-container-od {
+    width: 100%;
+    max-width: 1200px;
+    height: 80vh;
+    /* Set height for scrollable area */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    padding: 20px;
+    background-color: #B3E5FC;
+    border-radius: 8px;
+
 }
 
 /* Orders Section */
-.orders-section-od {
-    padding: 20px;
-}
-
-.orders-section-od h2 {
+.orders-container-od h2 {
     font-size: 28px;
     color: #333;
     margin-bottom: 20px;
@@ -21,6 +36,8 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    padding-bottom: 20px;
+    /* Add padding at the bottom for spacing */
 }
 
 /* Order Card Styling */
@@ -37,38 +54,6 @@
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-.order-id {
-    font-size: 24px;
-    color: #2f80ed;
-    margin-bottom: 10px;
-}
-
-.order-details p {
-    font-size: 16px;
-    color: #333;
-    margin: 5px 0;
-}
-
-.product-list h4 {
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: #2f80ed;
-}
-
-.product-list ul {
-    list-style: none;
-    padding: 0;
-}
-
-.product-list li {
-    background-color: #f4f7f9;
-    padding: 8px;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    font-size: 16px;
-    color: #333;
-}
-
 /* Responsive Design */
 @media (max-width: 1024px) {
     .orders-grid {
@@ -80,10 +65,4 @@
     .orders-grid {
         grid-template-columns: 1fr;
     }
-
-    .orders-section-od {
-        padding: 20px;
-        margin-top: 550px;
-    }
-
 }

@@ -52,7 +52,7 @@ const DoneOrders = () => {
 
   return (
     <div className="done-orders-page-od">
-      <div className="orders-section-od">
+      <div className="orders-container-od">
         <h2>Đơn Hàng Đã Hoàn Thành</h2>
         {loadingOrders ? (
           <p className="loading-text">Đang tải đơn hàng đã hoàn thành...</p>
