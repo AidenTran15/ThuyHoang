@@ -193,3 +193,47 @@ button {
     opacity: 1;
   }
 }
+
+/* Adjustments for mobile view */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+    max-height: 90vh;
+  }
+
+  .product-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .product-field-group {
+    width: 100%;
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 8px;
+  }
+
+  .quantity-input {
+    width: 100%;
+    padding: 8px;
+  }
+
+  .add-button,
+  .remove-product-button,
+  .save-button,
+  .cancel-button,
+  .add-product-button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+  }
+
+  /* Adjust button spacing */
+  .modal-footer {
+    flex-direction: column;
+  }
+}
