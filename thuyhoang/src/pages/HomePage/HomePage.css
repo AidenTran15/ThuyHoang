@@ -145,15 +145,6 @@
 }
 
 @media (max-width: 768px) {
-    .home-page {
-        margin-top: 220px !important;
-        padding-top: 550px;
-    }
-
-    .orders-section {
-        padding: 20px;
-        margin-top: 50px;
-    }
 
     .orders-header {
         flex-direction: column;
