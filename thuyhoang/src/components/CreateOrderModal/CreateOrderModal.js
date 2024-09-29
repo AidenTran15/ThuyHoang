@@ -203,22 +203,22 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
               </div>
 
               <div className="product-field-group">
-                <label className="input-label">Số Lượng</label>
-                {product.isConfirmed ? (
-                  <span className="locked-field">{product.quantity}</span>
-                ) : (
-                  <select
-                    value={product.quantity}
-                    onChange={e => handleProductChange(index, 'quantity', e.target.value)}
-                    className="input-field"
-                  >
-                    <option value="">Chọn số lượng</option>
-                    {[...Array(maxQuantities[`${product.color}-${product.size}`] || 0).keys()].map(q => (
-                      <option key={q + 1} value={q + 1}>{q + 1}</option>
-                    ))}
-                  </select>
-                )}
-              </div>
+  <label className="input-label">Số Lượng</label>
+  {product.isConfirmed ? (
+    <span className="locked-field">{product.quantity}</span>
+  ) : (
+    <input
+      type="number"
+      min="1"
+      max={maxQuantities[`${product.color}-${product.size}`] || 0}
+      value={product.quantity}
+      onChange={e => handleProductChange(index, 'quantity', e.target.value)}
+      className="input-field quantity-input"  // Added the custom class here
+    />
+  )}
+</div>
+
+
 
               {!product.isConfirmed ? (
                 <button className="add-button" onClick={() => confirmProduct(index)}>Thêm</button>

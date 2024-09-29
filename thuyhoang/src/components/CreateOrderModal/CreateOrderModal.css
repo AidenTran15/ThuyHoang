@@ -115,6 +115,7 @@ button {
 .add-button {
   background-color: #56ccf2;
   color: white;
+  margin-top: 22px;
 }
 
 .add-button:hover {
@@ -174,6 +175,12 @@ button {
 .add-product-button:hover {
   background-color: #4cae4c;
   transform: translateY(-3px);
+}
+
+.quantity-input {
+  width: 95px;
+  margin-bottom: 2px;
+
 }
 
 /* Animation for the modal */
