@@ -9,6 +9,11 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
   const [maxQuantities, setMaxQuantities] = useState({});
   const [productIDs, setProductIDs] = useState({});
 
+  const formatCurrencyVND = (amount) => {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+  };
+  
+
   const loggedInCustomer = (() => {
     try {
       const storedCustomer = localStorage.getItem('loggedInCustomer');
@@ -248,15 +253,16 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
         </div>
 
         <div className="input-group">
-          <label className="input-label">Tổng Số Tiền</label>
-          <input
-            type="number"
-            name="total"
-            value={newOrder.total}
-            readOnly
-            className="input-field"
-          />
-        </div>
+  <label className="input-label">Tổng Số Tiền</label>
+  <input
+    type="text"  // Change type to text to accommodate formatted strings
+    name="total"
+    value={formatCurrencyVND(newOrder.total)}
+    readOnly
+    className="input-field"
+  />
+</div>
+
 
         <div className="modal-footer">
           <button className="save-button" onClick={handleCreateOrderSaveClick}>Lưu</button>

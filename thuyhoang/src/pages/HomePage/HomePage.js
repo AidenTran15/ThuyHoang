@@ -25,6 +25,9 @@ const Home = () => {
     return null;
   }, []);
 
+
+  
+
   // Function to scroll to top of the page
   const scrollToTop = () => {
     document.getElementById('main-content')?.scrollTo({ top: 0, behavior: 'smooth' });
