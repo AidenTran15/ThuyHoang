@@ -102,6 +102,24 @@
 }
 
 
+/* Styling for the normal-text class to remove bold */
+.normal-text {
+    font-weight: normal;
+    display: inline;
+    /* Make div behave like span */
+    margin-left: 10px;
+    /* Add spacing between label and value */
+}
+
+.order-details .normal-text {
+    font-weight: 400 !important;
+    /* Override any other styles */
+}
+
+
+
+
+
 /* Styling for values inside .order-info */
 .order-info {
     font-size: 16px !important;

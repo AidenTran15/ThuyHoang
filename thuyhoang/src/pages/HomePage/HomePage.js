@@ -103,11 +103,12 @@ const Home = () => {
                 <div key={index} className="order-card">
                   <h3 className="order-id">Đơn Hàng #{order.orderID}</h3>
                   <div className="order-details">
-  <p><strong className="order-info">Ngày Đặt Hàng:</strong> <span>{order.OrderDate}</span></p>
-  <p><strong className="order-info">Tổng Số Lượng:</strong> <span>{order.TotalQuantity}</span></p>
-  <p><strong className="order-info">Tổng Giá Trị:</strong> <span>{formatCurrencyVND(order.Total)}</span></p>
-  <p><strong className="order-info">Trạng Thái:</strong> <span>{order.Status}</span></p>
+  <p><strong className="order-info">Ngày Đặt Hàng:</strong> <div className="normal-text">{order.OrderDate}</div></p>
+  <p><strong className="order-info">Tổng Số Lượng:</strong> <div className="normal-text">{order.TotalQuantity}</div></p>
+  <p><strong className="order-info">Tổng Giá Trị:</strong> <div className="normal-text">{formatCurrencyVND(order.Total)}</div></p>
+  <p><strong className="order-info">Trạng Thái:</strong> <div className="normal-text">{order.Status}</div></p>
 </div>
+
 
 
 
