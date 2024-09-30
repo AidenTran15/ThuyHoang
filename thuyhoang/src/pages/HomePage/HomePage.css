@@ -81,9 +81,26 @@
 }
 
 /* Order Details Styling */
-.order-details {
-    margin-bottom: 15px;
+/* Styling for <strong> elements with the order-info class */
+.order-details strong.order-info {
+    font-size: 16px !important;
+    /* Normal font size */
+    color: #333 !important;
+    /* Normal text color */
+    padding: 4px 8px !important;
+    /* Add padding to make it stand out */
+    border-radius: 5px !important;
+    /* Rounded corners */
+    background-color: #f4f7f9 !important;
+    /* Background similar to product list */
+    font-weight: normal !important;
+    /* Ensure text is not bold */
+    display: inline-block !important;
+    /* Display inline */
+    line-height: 1.6 !important;
+    /* Ensure line height matches */
 }
+
 
 /* Styling for values inside .order-info */
 .order-info {
