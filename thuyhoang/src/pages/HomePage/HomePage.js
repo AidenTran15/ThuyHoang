@@ -106,8 +106,11 @@ const Home = () => {
   <p><strong className="order-info">Ngày Đặt Hàng:</strong> <div className="normal-text">{order.OrderDate}</div></p>
   <p><strong className="order-info">Tổng Số Lượng:</strong> <div className="normal-text">{order.TotalQuantity}</div></p>
   <p><strong className="order-info">Tổng Giá Trị:</strong> <div className="normal-text">{formatCurrencyVND(order.Total)}</div></p>
-  <p><strong className="order-info">Trạng Thái:</strong> <div className="normal-text">{order.Status}</div></p>
+  <p><strong className="order-info">Trạng Thái:</strong> <div className="normal-text">
+    {order.Status === 'Pending' ? 'Đang xử lý' : order.Status}
+  </div></p>
 </div>
+
 
 
 
