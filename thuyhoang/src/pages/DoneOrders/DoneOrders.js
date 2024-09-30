@@ -50,6 +50,10 @@ const DoneOrders = () => {
     }
   }, [loggedInCustomer]);
 
+  const formatCurrencyVND = (amount) => {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+  };
+
   return (
     <div className="done-orders-page-od">
       <div className="orders-container-od">
@@ -65,12 +69,13 @@ const DoneOrders = () => {
             {doneOrders.map((order, index) => (
               <div key={index} className="order-card">
                 <h3 className="order-id">Đơn Hàng #{order.orderID}</h3>
-                <div className="order-details">
-                  <p><strong>Ngày Đặt Hàng:</strong> {order.OrderDate}</p>
-                  <p><strong>Tổng Số Lượng:</strong> {order.TotalQuantity}</p>
-                  <p><strong>Tổng Giá Trị:</strong> {order.Total}</p>
-                  <p><strong>Trạng Thái:</strong> {order.Status}</p>
-                </div>
+<div className="order-details">
+  <p><strong className="order-info">Ngày Đặt Hàng:</strong> <div className="normal-text">{order.OrderDate}</div></p>
+  <p><strong className="order-info">Tổng Số Lượng:</strong> <div className="normal-text">{order.TotalQuantity}</div></p>
+  <p><strong className="order-info">Tổng Giá Trị:</strong> <div className="normal-text">{formatCurrencyVND(order.Total)}</div></p>
+  <p><strong className="order-info">Trạng Thái:</strong> {order.Status === 'Done' ? 'Hoàn Thành' : order.Status}</p>
+</div>
+
                 <div className="product-list">
                   <h4>Sản Phẩm:</h4>
                   <ul>
