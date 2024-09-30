@@ -85,23 +85,26 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
   };
 
   useEffect(() => {
-    if (loggedInCustomer && loggedInCustomer.name) {
+    if (loggedInCustomer && loggedInCustomer.name && newOrder.customer !== loggedInCustomer.name) {
       setNewOrder(prev => ({
         ...prev,
         customer: loggedInCustomer.name
       }));
     }
-  }, [loggedInCustomer, setNewOrder]);
+  }, [loggedInCustomer, newOrder.customer, setNewOrder]);
 
   useEffect(() => {
     const totalQuantity = newOrder.productList.reduce((total, product) => total + parseInt(product.quantity || 0), 0);
     const totalAmount = loggedInCustomer ? totalQuantity * (loggedInCustomer.short_price || 0) : 0;
-    setNewOrder(prev => ({
-      ...prev,
-      totalQuantity,
-      total: totalAmount,
-    }));
-  }, [newOrder.productList, loggedInCustomer, setNewOrder]);
+  
+    if (newOrder.totalQuantity !== totalQuantity || newOrder.total !== totalAmount) {
+      setNewOrder(prev => ({
+        ...prev,
+        totalQuantity,
+        total: totalAmount,
+      }));
+    }
+  }, [newOrder.productList, loggedInCustomer, newOrder.totalQuantity, newOrder.total, setNewOrder]);
 
   const handleCreateOrderSaveClick = () => {
     const orderWithID = {
