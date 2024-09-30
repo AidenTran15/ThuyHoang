@@ -26,6 +26,9 @@ const Home = () => {
   }, []);
 
 
+  const formatCurrencyVND = (amount) => {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+  };
   
 
   // Function to scroll to top of the page
@@ -102,7 +105,7 @@ const Home = () => {
                   <div className="order-details">
                     <p><strong>Ngày Đặt Hàng:</strong> <span className="order-info">{order.OrderDate}</span></p>
                     <p><strong>Tổng Số Lượng:</strong> <span className="order-info">{order.TotalQuantity}</span></p>
-                    <p><strong>Tổng Giá Trị:</strong> <span className="order-info">{order.Total}</span></p>
+                    <p><strong>Tổng Giá Trị:</strong> <span className="order-info">{formatCurrencyVND(order.Total)}</span></p>
                     <p><strong>Trạng Thái:</strong> <span className="order-info">{order.Status}</span></p>
                   </div>
 
