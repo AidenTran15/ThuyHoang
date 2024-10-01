@@ -67,37 +67,50 @@ const ProfilePage = () => {
   };
 
   if (!customerInfo) {
-    return <div className="profile-page-loading">Loading...</div>; // Display loading while data is being fetched
+    return <div className="profile-modern-loading">Loading...</div>; // Display loading while data is being fetched
   }
 
   return (
-    <div className="profile-page-container">
-      <div className="profile-page-sidebar">
-        <h2 className="profile-page-title">Thông Tin Khách Hàng</h2>
-        <ul className="profile-page-list">
-          <li className="profile-page-list-item"><span>Tên:</span> {customerInfo.name}</li>
-          <li className="profile-page-list-item"><span>Số Điện Thoại:</span> {customerInfo.phone_number}</li>
-          <li className="profile-page-list-item"><span>Địa Chỉ:</span> {customerInfo.address}</li>
-          <li className="profile-page-list-item"><span>Giá Quần Áo:</span> {customerInfo.short_price} VND</li>
-        </ul>
+    <div className="profile-modern-container">
+      <div className="profile-modern-header">
+        <h1 className="profile-modern-title">Customer Information</h1>
+  
       </div>
 
-      <div className="profile-page-content">
-        <div className="profile-page-card">
-          <h3 className="profile-page-card-title">Đặt Lại Mật Khẩu</h3>
-          <div className="profile-page-password-reset">
+      <div className="profile-modern-content">
+        <div className="profile-modern-card">
+          <h2 className="profile-modern-card-title">Profile Details</h2>
+          <div className="profile-modern-info-grid">
+            <div className="profile-modern-info-item">
+              <span className="profile-modern-info-label">Name:</span> {customerInfo.name}
+            </div>
+            <div className="profile-modern-info-item">
+              <span className="profile-modern-info-label">Phone Number:</span> {customerInfo.phone_number}
+            </div>
+            <div className="profile-modern-info-item">
+              <span className="profile-modern-info-label">Address:</span> {customerInfo.address}
+            </div>
+            <div className="profile-modern-info-item">
+              <span className="profile-modern-info-label">Pants Price:</span> {customerInfo.short_price} VND
+            </div>
+          </div>
+        </div>
+
+        <div className="profile-modern-card">
+          <h2 className="profile-modern-card-title">Reset Password</h2>
+          <div className="profile-modern-password-reset">
             <input
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Nhập mật khẩu mới"
-              className="profile-page-input"
+              placeholder="Enter new password"
+              className="profile-modern-input"
             />
-            <button onClick={handlePasswordReset} className="profile-page-button">
-              Đặt Lại Mật Khẩu
+            <button onClick={handlePasswordReset} className="profile-modern-button">
+              Update Password
             </button>
           </div>
-          {message && <p className="profile-page-message">{message}</p>}
+          {message && <p className="profile-modern-message">{message}</p>}
         </div>
       </div>
     </div>
