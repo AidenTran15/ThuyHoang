@@ -1,3 +1,14 @@
+/* General body styling */
+body {
+    padding-top: 80px;
+    /* Adjusted to match the navbar height */
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #f4f7f9;
+    /* Light background color for the page */
+}
+
+/* Navbar wrapper styling */
 .navbar-wrapper {
     background-color: #56ccf2;
     /* Ensure the same background color */
@@ -6,8 +17,11 @@
     left: 0;
     width: 100%;
     z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Add a slight shadow for depth */
 }
 
+/* Navbar styling */
 .navbar {
     max-width: 1200px;
     /* Center the content */
@@ -18,12 +32,14 @@
     align-items: center;
 }
 
+/* Navbar header styling */
 .navbar-header h1 {
     font-size: 24px;
     color: white;
     margin: 0;
 }
 
+/* Navbar links styling */
 .navbar-links {
     list-style: none;
     display: flex;
@@ -35,6 +51,7 @@
     margin-left: 20px;
 }
 
+/* Navbar link styling */
 .navbar-links a {
     text-decoration: none;
     color: white;
@@ -44,9 +61,81 @@
 
 .navbar-links a:hover {
     color: #2f80ed;
+    /* Hover color for links */
 }
 
-body {
-    padding-top: 60px;
-    /* Adjust to match the navbar height */
+/* Dropdown button styling */
+.dropdown-button {
+    background-color: #2d9cdb;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-button:hover {
+    background-color: #2f80ed;
+}
+
+/* Dropdown content container */
+.dropdown-content {
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Shadow effect */
+    border-radius: 5px;
+    z-index: 1;
+    margin-top: 10px;
+    right: 0;
+    /* Align dropdown to the right */
+}
+
+/* Dropdown links */
+.dropdown-content a {
+    color: #333;
+    /* Dark text color for dropdown links */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #f0f4f8;
+    color: #2f80ed;
+    /* Hover color for dropdown links */
+}
+
+/* Dropdown container styling */
+.navbar-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-links li {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .dropdown-content {
+        right: 0;
+        /* Align dropdown to the right on smaller screens */
+        left: auto;
+    }
 }
