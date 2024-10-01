@@ -67,28 +67,38 @@ const ProfilePage = () => {
   };
 
   if (!customerInfo) {
-    return <div>Loading...</div>; // Display loading while data is being fetched
+    return <div className="profile-page-loading">Loading...</div>; // Display loading while data is being fetched
   }
 
   return (
-    <div className="profile-container">
-      <h2>Thông Tin Khách Hàng</h2>
-      <div className="profile-info">
-        <p><strong>Tên:</strong> {customerInfo.name}</p>
-        <p><strong>Số Điện Thoại:</strong> {customerInfo.phone_number}</p>
-        <p><strong>Địa Chỉ:</strong> {customerInfo.address}</p>
-        <p><strong>Giá Quần Áo:</strong> {customerInfo.short_price} VND</p>
+    <div className="profile-page-container">
+      <div className="profile-page-sidebar">
+        <h2 className="profile-page-title">Thông Tin Khách Hàng</h2>
+        <ul className="profile-page-list">
+          <li className="profile-page-list-item"><span>Tên:</span> {customerInfo.name}</li>
+          <li className="profile-page-list-item"><span>Số Điện Thoại:</span> {customerInfo.phone_number}</li>
+          <li className="profile-page-list-item"><span>Địa Chỉ:</span> {customerInfo.address}</li>
+          <li className="profile-page-list-item"><span>Giá Quần Áo:</span> {customerInfo.short_price} VND</li>
+        </ul>
       </div>
-      <div className="password-reset">
-        <h3>Đặt Lại Mật Khẩu</h3>
-        <input
-          type="password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          placeholder="Nhập mật khẩu mới"
-        />
-        <button onClick={handlePasswordReset}>Đặt Lại Mật Khẩu</button>
-        {message && <p>{message}</p>}
+
+      <div className="profile-page-content">
+        <div className="profile-page-card">
+          <h3 className="profile-page-card-title">Đặt Lại Mật Khẩu</h3>
+          <div className="profile-page-password-reset">
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Nhập mật khẩu mới"
+              className="profile-page-input"
+            />
+            <button onClick={handlePasswordReset} className="profile-page-button">
+              Đặt Lại Mật Khẩu
+            </button>
+          </div>
+          {message && <p className="profile-page-message">{message}</p>}
+        </div>
       </div>
     </div>
   );
