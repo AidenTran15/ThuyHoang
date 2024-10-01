@@ -1,4 +1,4 @@
-/* General body styling */
+/* src/components/NavBar/NavBar.css */
 body {
     padding-top: 80px;
     /* Adjusted to match the navbar height */
@@ -47,10 +47,6 @@ body {
     padding: 0;
 }
 
-.navbar-links li {
-    margin-left: 20px;
-}
-
 /* Navbar link styling */
 .navbar-links a {
     text-decoration: none;
@@ -74,10 +70,31 @@ body {
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    position: relative;
+    /* Enable positioning for the arrow */
 }
 
 .dropdown-button:hover {
     background-color: #2f80ed;
+}
+
+/* Arrow styling */
+.arrow {
+    display: inline-block;
+    margin-left: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    padding: 5px;
+    transform: rotate(45deg);
+    /* Point arrow downwards */
+    transition: transform 0.3s ease;
+    /* Smooth transition */
+}
+
+/* Arrow pointing up when dropdown is open */
+.arrow-up {
+    transform: rotate(-135deg);
+    /* Rotate to point upwards */
 }
 
 /* Dropdown content container */
