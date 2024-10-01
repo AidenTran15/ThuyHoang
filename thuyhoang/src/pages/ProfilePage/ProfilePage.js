@@ -30,84 +30,80 @@ const ProfilePage = () => {
   // Handle password reset
   const handlePasswordReset = () => {
     if (!customerInfo) {
-      setMessage('Customer information is not loaded yet.');
+      setMessage('Thông tin khách hàng chưa được tải.');
       return;
     }
 
     // Prepare the payload with the "body" field as a string
     const payload = {
       body: JSON.stringify({
-        phone_number: customerInfo.phone_number, // Include the phone number
+        phone_number: customerInfo.phone_number,
         name: customerInfo.name,
         address: customerInfo.address,
         short_price: customerInfo.short_price,
-        password: newPassword, // Update the password
+        password: newPassword,
       }),
     };
 
     axios
       .put(
         'https://3dm9uksgnf.execute-api.ap-southeast-2.amazonaws.com/prod/update',
-        payload, // Send payload with body as a stringified JSON
+        payload,
         {
           headers: {
-            'Content-Type': 'application/json', // Set the Content-Type header
+            'Content-Type': 'application/json',
           },
         }
       )
       .then((response) => {
         console.log('Update response:', response.data);
-        setMessage('Password updated successfully.');
+        setMessage('Mật khẩu đã được cập nhật thành công.');
         setNewPassword('');
       })
       .catch((error) => {
-        setMessage('Failed to update password.');
+        setMessage('Cập nhật mật khẩu thất bại.');
         console.error('Error updating password:', error);
       });
   };
 
   if (!customerInfo) {
-    return <div className="profile-modern-loading">Loading...</div>; // Display loading while data is being fetched
+    return <div className="profile-modern-loading">Đang tải...</div>;
   }
 
   return (
     <div className="profile-modern-container">
-      <div className="profile-modern-header">
-        <h1 className="profile-modern-title">Customer Information</h1>
-  
-      </div>
-
+      {/* Removed the header section */}
       <div className="profile-modern-content">
         <div className="profile-modern-card">
-          <h2 className="profile-modern-card-title">Profile Details</h2>
+          <h2 className="profile-modern-card-title">Chi Tiết Hồ Sơ</h2>
           <div className="profile-modern-info-grid">
             <div className="profile-modern-info-item">
-              <span className="profile-modern-info-label">Name:</span> {customerInfo.name}
+              <span className="profile-modern-info-label">Tên:</span> {customerInfo.name}
             </div>
             <div className="profile-modern-info-item">
-              <span className="profile-modern-info-label">Phone Number:</span> {customerInfo.phone_number}
+              <span className="profile-modern-info-label">Số Điện Thoại:</span> {customerInfo.phone_number}
             </div>
             <div className="profile-modern-info-item">
-              <span className="profile-modern-info-label">Address:</span> {customerInfo.address}
+              <span className="profile-modern-info-label">Địa Chỉ:</span> {customerInfo.address}
             </div>
             <div className="profile-modern-info-item">
-              <span className="profile-modern-info-label">Pants Price:</span> {customerInfo.short_price} VND
+              <span className="profile-modern-info-label">Giá Quần Áo:</span> {customerInfo.short_price} VND
             </div>
           </div>
         </div>
 
         <div className="profile-modern-card">
-          <h2 className="profile-modern-card-title">Reset Password</h2>
+          <h2 className="profile-modern-card-title">Đặt Lại Mật Khẩu</h2>
           <div className="profile-modern-password-reset">
             <input
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Enter new password"
+              placeholder="Nhập mật khẩu mới"
               className="profile-modern-input"
             />
             <button onClick={handlePasswordReset} className="profile-modern-button">
-              Update Password
+              Cập Nhật Mật Khẩu
             </button>
           </div>
           {message && <p className="profile-modern-message">{message}</p>}
