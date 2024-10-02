@@ -37,7 +37,10 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
   }, []);
 
   const getMaxQuantityAndProductID = (color, size) => {
-    const product = products.find(product => product.Color === color && product.Size.toString() === size.toString());
+    // Check if color and size are defined before performing the lookup
+    if (!color || !size) return 0;
+
+    const product = products.find(product => product.Color === color && product.Size?.toString() === size?.toString());
     if (product) {
       setProductIDs(prev => ({ ...prev, [`${color}-${size}`]: product.ProductID }));
       return product.Quantity;
@@ -193,7 +196,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
                 ) : (
                   <input
                     type="text"
-                    value={product.size}
+                    value={product.size || ''} // Ensure default empty value
                     onChange={e => handleProductChange(index, 'size', e.target.value)}
                     className="input-field size-input"
                     placeholder="Nhập kích cỡ"
