@@ -4,7 +4,6 @@ import './CreateOrderModal.css';
 
 const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, orders }) => {
   const [uniqueColors, setUniqueColors] = useState([]);
-  const [filteredSizes, setFilteredSizes] = useState({});
   const [products, setProducts] = useState([]);
   const [maxQuantities, setMaxQuantities] = useState({});
   const [productIDs, setProductIDs] = useState({});
@@ -12,7 +11,6 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
   const formatCurrencyVND = (amount) => {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
   };
-  
 
   const loggedInCustomer = (() => {
     try {
@@ -37,11 +35,6 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
       .catch(error => console.error('Error fetching products:', error));
   }, []);
 
-  const filterSizesByColor = (color) => {
-    const sizesForColor = products.filter(product => product.Color === color).map(product => product.Size);
-    setFilteredSizes({ [color]: [...new Set(sizesForColor)] });
-  };
-
   const getMaxQuantityAndProductID = (color, size) => {
     const product = products.find(product => product.Color === color && product.Size.toString() === size.toString());
     if (product) {
@@ -57,8 +50,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
     setNewOrder({ ...newOrder, productList: updatedProducts });
 
     if (field === 'color') {
-      filterSizesByColor(value);
-      updatedProducts[index].size = '';
+      updatedProducts[index].size = ''; // Reset size when color changes
     }
 
     if (field === 'size') {
@@ -101,7 +93,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
   useEffect(() => {
     const totalQuantity = newOrder.productList.reduce((total, product) => total + parseInt(product.quantity || 0), 0);
     const totalAmount = loggedInCustomer ? totalQuantity * (loggedInCustomer.short_price || 0) : 0;
-  
+
     if (newOrder.totalQuantity !== totalQuantity || newOrder.total !== totalAmount) {
       setNewOrder(prev => ({
         ...prev,
@@ -136,10 +128,10 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
     })
       .then(response => {
         console.log('Order saved successfully:', response.data);
-        
+
         // Update the orders state instantly
         setOrders([orderWithID, ...orders]);
-        
+
         handleClose();  // Close the modal after saving
       })
       .catch(error => {
@@ -197,36 +189,31 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
                 {product.isConfirmed ? (
                   <span className="locked-field">{product.size}</span>
                 ) : (
-                  <select
+                  <input
+                    type="text"
                     value={product.size}
                     onChange={e => handleProductChange(index, 'size', e.target.value)}
-                    className="input-field"
-                  >
-                    <option value="">Chọn kích cỡ</option>
-                    {(filteredSizes[product.color] || []).map(size => (
-                      <option key={size} value={size}>{size}</option>
-                    ))}
-                  </select>
+                    className="input-field size-input"
+                    placeholder="Nhập kích cỡ"
+                  />
                 )}
               </div>
 
               <div className="product-field-group">
-  <label className="input-label">Số Lượng</label>
-  {product.isConfirmed ? (
-    <span className="locked-field">{product.quantity}</span>
-  ) : (
-    <input
-      type="number"
-      min="1"
-      max={maxQuantities[`${product.color}-${product.size}`] || 0}
-      value={product.quantity}
-      onChange={e => handleProductChange(index, 'quantity', e.target.value)}
-      className="input-field quantity-input"  // Added the custom class here
-    />
-  )}
-</div>
-
-
+                <label className="input-label">Số Lượng</label>
+                {product.isConfirmed ? (
+                  <span className="locked-field">{product.quantity}</span>
+                ) : (
+                  <input
+                    type="number"
+                    min="1"
+                    max={maxQuantities[`${product.color}-${product.size}`] || 0}
+                    value={product.quantity}
+                    onChange={e => handleProductChange(index, 'quantity', e.target.value)}
+                    className="input-field quantity-input"
+                  />
+                )}
+              </div>
 
               {!product.isConfirmed ? (
                 <button className="add-button" onClick={() => confirmProduct(index)}>Thêm</button>
@@ -253,16 +240,15 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
         </div>
 
         <div className="input-group">
-  <label className="input-label">Tổng Số Tiền</label>
-  <input
-    type="text"  // Change type to text to accommodate formatted strings
-    name="total"
-    value={formatCurrencyVND(newOrder.total)}
-    readOnly
-    className="input-field"
-  />
-</div>
-
+          <label className="input-label">Tổng Số Tiền</label>
+          <input
+            type="text"
+            name="total"
+            value={formatCurrencyVND(newOrder.total)}
+            readOnly
+            className="input-field"
+          />
+        </div>
 
         <div className="modal-footer">
           <button className="save-button" onClick={handleCreateOrderSaveClick}>Lưu</button>
