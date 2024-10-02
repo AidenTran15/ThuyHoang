@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './NavBar.css';
 
 const NavBar = () => {
   const location = useLocation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   // Toggle dropdown state
   const toggleDropdown = () => {
     setDropdownOpen((prevState) => !prevState);
   };
+
+  // Check screen size and update isMobile state
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Pages and their corresponding links
   const pages = [
@@ -27,28 +38,37 @@ const NavBar = () => {
         <div className="navbar-header">
           <h1>Thuỷ Hoàng</h1>
         </div>
+        {/* Render the links differently based on the screen size */}
         <ul className="navbar-links">
-          {/* Dropdown menu */}
-          <li className="navbar-dropdown">
-            <button className="dropdown-button" onClick={toggleDropdown}>
-              Menu
-              <span className={`arrow ${dropdownOpen ? 'arrow-up' : 'arrow-down'}`}></span>
-            </button>
-            {dropdownOpen && (
-              <div className="dropdown-content">
-                {/* Render links for pages other than the current page */}
-                {dropdownLinks.map((page) => (
-                  <Link
-                    key={page.path}
-                    to={page.path}
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    {page.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </li>
+          {isMobile ? (
+            <li className="navbar-dropdown">
+              <button className="dropdown-button" onClick={toggleDropdown}>
+                Thực Đơn
+                <span className={`arrow ${dropdownOpen ? 'arrow-up' : 'arrow-down'}`}></span>
+              </button>
+              {dropdownOpen && (
+                <div className="dropdown-content">
+                  {dropdownLinks.map((page) => (
+                    <Link
+                      key={page.path}
+                      to={page.path}
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      {page.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </li>
+          ) : (
+            dropdownLinks.map((page) => (
+              <li key={page.path}>
+                <Link to={page.path} className="navbar-link">
+                  {page.name}
+                </Link>
+              </li>
+            ))
+          )}
         </ul>
       </nav>
     </div>
