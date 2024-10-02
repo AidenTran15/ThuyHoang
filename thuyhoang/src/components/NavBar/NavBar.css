@@ -36,7 +36,13 @@ body {
     font-size: 24px;
     color: white;
     margin: 0;
+    white-space: nowrap;
+    /* Prevent text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Add ellipsis if text overflows */
 }
+
 
 /* Navbar links styling */
 .navbar-links {
