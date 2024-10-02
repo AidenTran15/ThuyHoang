@@ -11,6 +11,16 @@ const NavBar = () => {
     setDropdownOpen((prevState) => !prevState);
   };
 
+  // Pages and their corresponding links
+  const pages = [
+    { name: 'Trang Chủ', path: '/home' },
+    { name: 'Đơn Hoàn Thành', path: '/done-orders' },
+    { name: 'Hồ Sơ', path: '/profile' }
+  ];
+
+  // Filter out the current page from the dropdown links
+  const dropdownLinks = pages.filter(page => page.path !== location.pathname);
+
   return (
     <div className="navbar-wrapper">
       <nav className="navbar">
@@ -18,18 +28,24 @@ const NavBar = () => {
           <h1>Thuỷ Hoàng</h1>
         </div>
         <ul className="navbar-links">
+          {/* Dropdown menu */}
           <li className="navbar-dropdown">
             <button className="dropdown-button" onClick={toggleDropdown}>
               Menu
-              {/* Down arrow */}
               <span className={`arrow ${dropdownOpen ? 'arrow-up' : 'arrow-down'}`}></span>
             </button>
             {dropdownOpen && (
               <div className="dropdown-content">
-                {/* Dropdown links */}
-                <Link to="/home" onClick={() => setDropdownOpen(false)}>Trang Chủ</Link>
-                <Link to="/done-orders" onClick={() => setDropdownOpen(false)}>Đơn Hoàn Thành</Link>
-                <Link to="/profile" onClick={() => setDropdownOpen(false)}>Hồ Sơ</Link>
+                {/* Render links for pages other than the current page */}
+                {dropdownLinks.map((page) => (
+                  <Link
+                    key={page.path}
+                    to={page.path}
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    {page.name}
+                  </Link>
+                ))}
               </div>
             )}
           </li>
