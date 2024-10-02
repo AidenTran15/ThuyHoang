@@ -32,10 +32,8 @@ body {
     color: white;
     margin: 0;
     white-space: nowrap;
-    /* Prevent text wrapping */
     overflow: hidden;
     text-overflow: ellipsis;
-    /* Add ellipsis if text overflows */
 }
 
 /* Navbar links styling */
@@ -52,11 +50,23 @@ body {
     color: white;
     font-weight: bold;
     transition: color 0.3s ease;
+    margin-left: 20px;
+    /* Add space between links */
 }
 
 .navbar-links .navbar-link:hover {
     color: #2f80ed;
     /* Hover color for links */
+}
+
+/* Additional spacing for Đơn Hoàn Thành and Hồ Sơ */
+@media (min-width: 769px) {
+    .navbar-links .navbar-link:first-of-type {
+        margin-left: 0;
+        /* Reset left margin for the first link */
+        margin-right: 30px;
+        /* Add spacing to the right of the first link */
+    }
 }
 
 /* Dropdown button styling */
@@ -70,7 +80,6 @@ body {
     border-radius: 5px;
     transition: background-color 0.3s ease;
     position: relative;
-    /* Enable positioning for the arrow */
 }
 
 .dropdown-button:hover {
@@ -104,7 +113,6 @@ body {
     margin-top: 10px;
     right: 0;
     text-align: right;
-    /* Align text inside dropdown to the right */
 }
 
 /* Dropdown links */
@@ -119,7 +127,6 @@ body {
 .dropdown-content a:hover {
     background-color: #f0f4f8;
     color: #2f80ed;
-    /* Hover color for dropdown links */
 }
 
 /* Dropdown container styling */
@@ -131,52 +138,19 @@ body {
 /* Media query for mobile view */
 @media (max-width: 768px) {
     .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .navbar-links {
-        flex-direction: column;
-        align-items: flex-end;
-    }
-
-    .navbar-links .navbar-link {
-        display: none;
-        /* Hide individual links on mobile */
-    }
-
-    .navbar-dropdown {
-        display: block;
-        /* Show dropdown on mobile */
-    }
-
-    .dropdown-content {
-        right: 0;
-        left: auto;
-        text-align: right;
-    }
-}
-
-/* Media query for mobile view */
-@media (max-width: 768px) {
-    .navbar {
         flex-direction: row;
-        /* Keep items in a row */
         justify-content: space-between;
-        /* Space between header and dropdown */
         align-items: center;
-        /* Center items vertically */
     }
 
     .navbar-header {
         margin-left: 20px;
-        /* Add some space to the left of the header */
+        /* Add space to the left of the header */
     }
 
     .navbar-links {
         flex-direction: column;
         align-items: flex-end;
-        /* Align dropdown button to the right */
         width: 100%;
         /* Ensure links take full width */
     }
@@ -193,17 +167,12 @@ body {
 
     .dropdown-content {
         position: absolute;
-        /* Use absolute positioning */
         right: 10px;
-        /* Position dropdown 10px from the right side */
+        /* Position dropdown to the right side */
         left: auto;
-        /* Remove any left alignment */
         text-align: right;
-        /* Align text inside dropdown to the right */
         width: auto;
-        /* Ensure dropdown is not stretched */
         min-width: 200px;
-        /* Set a minimum width */
     }
 
     .dropdown-button {
