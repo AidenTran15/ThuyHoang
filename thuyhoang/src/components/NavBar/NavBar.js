@@ -43,7 +43,7 @@ const NavBar = () => {
           {isMobile ? (
             <li className="navbar-dropdown">
               <button className="dropdown-button" onClick={toggleDropdown}>
-                Thực Đơn
+                Danh mục
                 <span className={`arrow ${dropdownOpen ? 'arrow-up' : 'arrow-down'}`}></span>
               </button>
               {dropdownOpen && (
