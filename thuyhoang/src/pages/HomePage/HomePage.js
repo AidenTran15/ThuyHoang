@@ -25,11 +25,9 @@ const Home = () => {
     return null;
   }, []);
 
-
   const formatCurrencyVND = (amount) => {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
   };
-  
 
   // Function to scroll to top of the page
   const scrollToTop = () => {
@@ -103,18 +101,14 @@ const Home = () => {
                 <div key={index} className="order-card">
                   <h3 className="order-id">Đơn Hàng #{order.orderID}</h3>
                   <div className="order-details">
-  <p><strong className="order-info">Ngày Đặt Hàng:</strong> <div className="normal-text">{order.OrderDate}</div></p>
-  <p><strong className="order-info">Tổng Số Lượng:</strong> <div className="normal-text">{order.TotalQuantity}</div></p>
-  <p><strong className="order-info">Tổng Giá Trị:</strong> <div className="normal-text">{formatCurrencyVND(order.Total)}</div></p>
-  <p><strong className="order-info">Trạng Thái:</strong> <div className="normal-text">
-    {order.Status === 'Pending' ? 'Đang xử lý' : order.Status}
-  </div></p>
-</div>
-
-
-
-
-
+                    <p><strong className="order-info">Ngày Đặt Hàng:</strong> <div className="normal-text">{order.OrderDate}</div></p>
+                    <p><strong className="order-info">Tổng Số Lượng:</strong> <div className="normal-text">{order.TotalQuantity}</div></p>
+                    <p><strong className="order-info">Tổng Giá Trị:</strong> <div className="normal-text">{formatCurrencyVND(order.Total)}</div></p>
+                    <p><strong className="order-info">Trạng Thái:</strong> <div className="normal-text">
+                      {order.Status === 'Pending' ? 'Đang xử lý' : order.Status}
+                    </div></p>
+                    <p><strong className="order-info">Ghi Chú:</strong> <div className="normal-text">{order.Note || 'Không có ghi chú'}</div></p> {/* Added Note Field */}
+                  </div>
                   <div className="product-list">
                     <h4>Sản Phẩm:</h4>
                     <ul>
