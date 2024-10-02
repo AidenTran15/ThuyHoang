@@ -72,10 +72,15 @@
   box-shadow: 0 0 8px rgba(86, 204, 242, 0.5);
 }
 
-/* Add specific styling for the size input */
-.input-field.size-input {
+/* Add specific styling for the color dropdown and size input */
+.input-field.color-input {
   width: 150px;
-  /* Adjust width as needed */
+  /* Set desired width for color dropdown */
+}
+
+.input-field.size-input {
+  width: 100px;
+  /* Set desired width for size input */
 }
 
 /* Product card styling */
@@ -214,6 +219,11 @@ button {
 
   .product-field-group {
     width: 100%;
+  }
+
+  .input-field.color-input {
+    width: 100%;
+    /* Make the color dropdown field full-width on small screens */
   }
 
   .input-field.size-input {

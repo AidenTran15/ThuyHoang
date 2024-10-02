@@ -174,7 +174,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
                   <select
                     value={product.color}
                     onChange={e => handleProductChange(index, 'color', e.target.value)}
-                    className="input-field"
+                    className="input-field color-input"
                   >
                     <option value="">Chọn màu sắc</option>
                     {uniqueColors.map(color => (
@@ -185,7 +185,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
               </div>
 
               <div className="product-field-group">
-                <label className="input-label">Kích Cỡ</label>
+                <label className="input-label">Số Size</label>
                 {product.isConfirmed ? (
                   <span className="locked-field">{product.size}</span>
                 ) : (
