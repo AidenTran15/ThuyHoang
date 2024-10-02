@@ -69,12 +69,13 @@ const DoneOrders = () => {
             {doneOrders.map((order, index) => (
               <div key={index} className="order-card">
                 <h3 className="order-id">Đơn Hàng #{order.orderID}</h3>
-<div className="order-details">
-  <p><strong className="order-info">Ngày Đặt Hàng:</strong> <div className="normal-text">{order.OrderDate}</div></p>
-  <p><strong className="order-info">Tổng Số Lượng:</strong> <div className="normal-text">{order.TotalQuantity}</div></p>
-  <p><strong className="order-info">Tổng Giá Trị:</strong> <div className="normal-text">{formatCurrencyVND(order.Total)}</div></p>
-  <p><strong className="order-info">Trạng Thái:</strong> {order.Status === 'Done' ? 'Hoàn Thành' : order.Status}</p>
-</div>
+                <div className="order-details">
+                  <p><strong className="order-info">Ngày Đặt Hàng:</strong> <div className="normal-text">{order.OrderDate}</div></p>
+                  <p><strong className="order-info">Tổng Số Lượng:</strong> <div className="normal-text">{order.TotalQuantity}</div></p>
+                  <p><strong className="order-info">Tổng Giá Trị:</strong> <div className="normal-text">{formatCurrencyVND(order.Total)}</div></p>
+                  <p><strong className="order-info">Trạng Thái:</strong> {order.Status === 'Done' ? 'Hoàn Thành' : order.Status}</p>
+                  <p><strong className="order-info">Ghi Chú:</strong> <div className="normal-text">{order.Note || 'Không có ghi chú'}</div></p> {/* Added Note Field */}
+                </div>
 
                 <div className="product-list">
                   <h4>Sản Phẩm:</h4>
