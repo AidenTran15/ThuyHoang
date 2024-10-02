@@ -1,4 +1,3 @@
-// src/components/NavBar/NavBar.js
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './NavBar.css';
@@ -19,7 +18,6 @@ const NavBar = () => {
           <h1>Thuỷ Hoàng</h1>
         </div>
         <ul className="navbar-links">
-          {/* Only show the dropdown menu and remove other links */}
           <li className="navbar-dropdown">
             <button className="dropdown-button" onClick={toggleDropdown}>
               Menu
