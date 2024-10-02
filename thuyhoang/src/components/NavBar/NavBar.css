@@ -157,21 +157,57 @@ body {
     }
 }
 
-/* Media query for desktop view */
-@media (min-width: 769px) {
+/* Media query for mobile view */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: row;
+        /* Keep items in a row */
+        justify-content: space-between;
+        /* Space between header and dropdown */
+        align-items: center;
+        /* Center items vertically */
+    }
+
+    .navbar-header {
+        margin-left: 20px;
+        /* Add some space to the left of the header */
+    }
+
     .navbar-links {
-        justify-content: flex-end;
+        flex-direction: column;
+        align-items: flex-end;
+        /* Align dropdown button to the right */
+        width: 100%;
+        /* Ensure links take full width */
     }
 
     .navbar-links .navbar-link {
-        margin-left: 20px;
-        /* Add spacing between links */
-        display: block;
-        /* Show links on desktop */
+        display: none;
+        /* Hide direct links on mobile */
     }
 
     .navbar-dropdown {
-        display: none;
-        /* Hide dropdown on desktop */
+        display: block;
+        /* Show dropdown on mobile */
+    }
+
+    .dropdown-content {
+        position: absolute;
+        /* Use absolute positioning */
+        right: 10px;
+        /* Position dropdown 10px from the right side */
+        left: auto;
+        /* Remove any left alignment */
+        text-align: right;
+        /* Align text inside dropdown to the right */
+        width: auto;
+        /* Ensure dropdown is not stretched */
+        min-width: 200px;
+        /* Set a minimum width */
+    }
+
+    .dropdown-button {
+        margin-right: 20px;
+        /* Add some space to the right of the dropdown button */
     }
 }
