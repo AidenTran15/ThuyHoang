@@ -19,12 +19,12 @@ const ProfilePage = () => {
       // Check if the customer object has the phone_number attribute
       if (!parsedCustomer.phone_number) {
         console.error('Phone number missing in customer info from localStorage:', parsedCustomer);
-        setMessage('Không tìm thấy số điện thoại. Vui lòng kiểm tra lại.');
 
         // If phone_number is missing, fetch from API to update localStorage
         fetchCustomerInfoFromAPI(parsedCustomer.name);
       } else {
         setCustomerInfo(parsedCustomer);
+        setMessage(''); // Clear error message if phone number is found
       }
     } else {
       // If no customer is found in localStorage, fetch from API
@@ -48,6 +48,9 @@ const ProfilePage = () => {
         if (foundCustomer) {
           setCustomerInfo(foundCustomer);
           localStorage.setItem('loggedInCustomer', JSON.stringify(foundCustomer));
+          setMessage(''); // Clear error message if a customer is found
+        } else {
+          setMessage('Không tìm thấy khách hàng trong API.');
         }
       })
       .catch((error) => {
