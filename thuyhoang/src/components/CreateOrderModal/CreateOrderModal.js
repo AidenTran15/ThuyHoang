@@ -30,11 +30,19 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
       .then(response => {
         const productData = JSON.parse(response.data.body);
         setProducts(productData);
-        const colors = [...new Set(productData.map(product => product.Color))];
-        setUniqueColors(colors);
+  
+        // Sort the colors based on the numerical value in the color string
+        const sortedColors = [...new Set(productData.map(product => product.Color))].sort((a, b) => {
+          const aValue = parseInt(a.match(/\d+/)); // Extract the number from the string
+          const bValue = parseInt(b.match(/\d+/)); // Extract the number from the string
+          return aValue - bValue;
+        });
+  
+        setUniqueColors(sortedColors);
       })
       .catch(error => console.error('Error fetching products:', error));
   }, []);
+  
 
   const getMaxQuantityAndProductID = (color, size) => {
     // Check if color and size are defined before performing the lookup
