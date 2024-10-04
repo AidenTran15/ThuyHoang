@@ -1,7 +1,6 @@
-/* src/pages/ProfilePage/ProfilePage.css */
 body {
     font-family: 'Poppins', sans-serif;
-    background: #B3E5FC;
+    background: #b3e5fc;
     margin: 0;
 }
 
@@ -10,9 +9,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 50px 20px;
-    /* Reduced padding */
     margin-top: -100px;
-    /* Moves the container up */
 }
 
 .profile-modern-content {
@@ -114,10 +111,12 @@ body {
     margin-top: 100px;
 }
 
-.profile-modern-header {
+/* Updated styles for logout button */
+.profile-modern-logout-section {
     display: flex;
-    justify-content: flex-end;
-    padding: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    /* Spacing to separate it from the other info */
 }
 
 .profile-modern-logout-button {
