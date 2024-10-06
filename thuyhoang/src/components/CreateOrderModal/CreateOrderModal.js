@@ -45,7 +45,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
 
         setUniqueColors(sortedColors);
       })
-      .catch((error) => console.error('Error fetching products:', error));
+      .catch((error) => console.error('Lỗi khi lấy danh sách sản phẩm:', error));
   }, []);
 
   const getMaxQuantityAndProductID = (color, size) => {
@@ -142,7 +142,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
         headers: { 'Content-Type': 'application/json' },
       })
       .then((response) => {
-        console.log('Order saved successfully:', response.data);
+        console.log('Đơn hàng đã được lưu thành công:', response.data);
 
         // Update the orders state instantly
         setOrders([orderWithID, ...orders]);
@@ -153,39 +153,39 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
             process.env.REACT_APP_EMAILJS_SERVICE_ID, // Use environment variable for service ID
             process.env.REACT_APP_EMAILJS_TEMPLATE_ID, // Use environment variable for template ID
             {
-              to_name: 'Recipient Name', // Replace with the actual recipient's name
+              to_name: 'Tên người nhận', // Replace with the actual recipient's name
               from_name: newOrder.customer,
               message: `
-                A new order has been created by ${newOrder.customer}.
-                \n\nTotal Quantity: ${newOrder.totalQuantity}
-                \nTotal Amount: ${formatCurrencyVND(newOrder.total)}
-                \nNote: ${note}
-                \nOrder Details:
-                \n${newOrder.productList.map((product) => `${product.color} - Size: ${product.size} - Quantity: ${product.quantity}`).join('\n')}
+                Đã có một đơn hàng mới được tạo bởi ${newOrder.customer}.
+                \n\nTổng số lượng: ${newOrder.totalQuantity}
+                \nTổng số tiền: ${formatCurrencyVND(newOrder.total)}
+                \nGhi chú: ${note}
+                \nChi tiết đơn hàng:
+                \n${newOrder.productList.map((product) => `${product.color} - Size: ${product.size} - Số lượng: ${product.quantity}`).join('\n')}
               `,
             }
           )
           .then((result) => {
-            console.log('Email sent successfully:', result);
-            alert('Email sent successfully!');
+            console.log('Email đã được gửi thành công:', result);
+            alert('Email đã được gửi thành công!');
             handleClose(); // Close the modal after saving and sending email
           })
           .catch((error) => {
-            console.error('Error sending email:', error); // Improved error logging
-            alert('Failed to send email. Please try again.');
+            console.error('Lỗi khi gửi email:', error); // Improved error logging
+            alert('Gửi email thất bại. Vui lòng thử lại.');
           });
       })
       .catch((error) => {
-        console.error('Request Error:', error.message || error); // Improved error logging
+        console.error('Lỗi yêu cầu:', error.message || error); // Improved error logging
         if (error.response) {
-          console.error('Server Error:', error.response.data);
-          alert(`Error: ${error.response.status} - ${error.response.data.message}`);
+          console.error('Lỗi máy chủ:', error.response.data);
+          alert(`Lỗi: ${error.response.status} - ${error.response.data.message}`);
         } else if (error.request) {
-          console.error('Network error, no response received:', error.request);
-          alert('Network error: No response from server.');
+          console.error('Lỗi mạng, không có phản hồi từ máy chủ:', error.request);
+          alert('Lỗi mạng: Không có phản hồi từ máy chủ.');
         } else {
-          console.error('Request Error:', error.message);
-          alert('Error saving order: ' + error.message);
+          console.error('Lỗi yêu cầu:', error.message);
+          alert('Lỗi khi lưu đơn hàng: ' + error.message);
         }
       });
   };
@@ -193,12 +193,12 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
   return (
     <div className="modal">
       <div className="modal-content">
-        <h3 className="modal-title">Create New Order</h3>
+        <h3 className="modal-title">Tạo Đơn Hàng Mới</h3>
         <div className="input-group">
-          <label className="input-label">Customer Name</label>
+          <label className="input-label">Tên Khách Hàng</label>
           <input
             type="text"
-            value={loggedInCustomer?.name ? `${loggedInCustomer.name}` : 'Customer not found'}
+            value={loggedInCustomer?.name ? `${loggedInCustomer.name}` : 'Không tìm thấy khách hàng'}
             readOnly
             className="input-field"
           />
@@ -208,7 +208,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
           <div key={index} className="product-card">
             <div className="product-row">
               <div className="product-field-group">
-                <label className="input-label">Color</label>
+                <label className="input-label">Màu Sắc</label>
                 {product.isConfirmed ? (
                   <span className="locked-field">{product.color}</span>
                 ) : (
@@ -217,7 +217,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
                     onChange={(e) => handleProductChange(index, 'color', e.target.value)}
                     className="input-field color-input"
                   >
-                    <option value="">Select Color</option>
+                    <option value="">Chọn Màu Sắc</option>
                     {uniqueColors.map((color) => (
                       <option key={color} value={color}>
                         {color}
@@ -228,7 +228,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
               </div>
 
               <div className="product-field-group">
-                <label className="input-label">Size</label>
+                <label className="input-label">Kích Cỡ</label>
                 {product.isConfirmed ? (
                   <span className="locked-field">{product.size}</span>
                 ) : (
@@ -237,13 +237,13 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
                     value={product.size || ''}
                     onChange={(e) => handleProductChange(index, 'size', e.target.value)}
                     className="input-field size-input"
-                    placeholder="Enter Size"
+                    placeholder="Nhập Kích Cỡ"
                   />
                 )}
               </div>
 
               <div className="product-field-group">
-                <label className="input-label">Quantity</label>
+                <label className="input-label">Số Lượng</label>
                 {product.isConfirmed ? (
                   <span className="locked-field">{product.quantity}</span>
                 ) : (
@@ -260,11 +260,11 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
 
               {!product.isConfirmed ? (
                 <button className="add-button" onClick={() => confirmProduct(index)}>
-                  Confirm
+                  Thêm
                 </button>
               ) : (
                 <button className="remove-product-button" onClick={() => removeProduct(index)}>
-                  Remove
+                  Xóa
                 </button>
               )}
             </div>
@@ -273,17 +273,17 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
 
         {newOrder.productList.some((product) => product.isConfirmed) && (
           <button className="add-product-button" onClick={addProduct}>
-            Add Product
+            Thêm Sản Phẩm
           </button>
         )}
 
         <div className="input-group">
-          <label className="input-label">Total Quantity</label>
+          <label className="input-label">Tổng Số Lượng</label>
           <input type="number" name="totalQuantity" value={newOrder.totalQuantity} readOnly className="input-field" />
         </div>
 
         <div className="input-group">
-          <label className="input-label">Total Amount</label>
+          <label className="input-label">Tổng Số Tiền</label>
           <input
             type="text"
             name="total"
@@ -294,21 +294,21 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
         </div>
 
         <div className="input-group">
-          <label className="input-label">Note</label>
+          <label className="input-label">Ghi Chú</label>
           <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
             className="input-field note-input"
-            placeholder="Add a note for the order..."
+            placeholder="Thêm ghi chú cho đơn hàng..."
           />
         </div>
 
         <div className="modal-footer">
           <button className="save-button" onClick={handleCreateOrderSaveClick}>
-            Save
+            Lưu
           </button>
           <button className="cancel-button" onClick={handleClose}>
-            Cancel
+            Hủy
           </button>
         </div>
       </div>
