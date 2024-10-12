@@ -12,6 +12,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
   const [maxQuantities, setMaxQuantities] = useState({});
   const [productIDs, setProductIDs] = useState({});
   const [note, setNote] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const formatCurrencyVND = (amount) => {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
@@ -116,6 +117,8 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
   }, [newOrder.productList, loggedInCustomer, newOrder.totalQuantity, newOrder.total, setNewOrder]);
 
   const handleCreateOrderSaveClick = () => {
+    setIsLoading(true); // Start loading spinner
+
     const orderWithID = {
       orderID: Math.floor(10000 + Math.random() * 90000).toString(),
       customer_name: newOrder.customer,
@@ -168,11 +171,13 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
           .then((result) => {
             console.log('Email đã được gửi thành công:', result);
             alert('Email đã được gửi thành công!');
+            setIsLoading(false); // Stop loading spinner
             handleClose(); // Close the modal after saving and sending email
           })
           .catch((error) => {
             console.error('Lỗi khi gửi email:', error); // Improved error logging
             alert('Gửi email thất bại. Vui lòng thử lại.');
+            setIsLoading(false); // Stop loading spinner
           });
       })
       .catch((error) => {
@@ -187,6 +192,7 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
           console.error('Lỗi yêu cầu:', error.message);
           alert('Lỗi khi lưu đơn hàng: ' + error.message);
         }
+        setIsLoading(false); // Stop loading spinner
       });
   };
 
@@ -304,10 +310,14 @@ const CreateOrderModal = ({ newOrder, setNewOrder, handleClose, setOrders, order
         </div>
 
         <div className="modal-footer">
-          <button className="save-button" onClick={handleCreateOrderSaveClick}>
-            Lưu
+          <button className="save-button" onClick={handleCreateOrderSaveClick} disabled={isLoading}>
+            {isLoading ? (
+              <div className="spinner"></div> // Add spinner when loading
+            ) : (
+              'Lưu'
+            )}
           </button>
-          <button className="cancel-button" onClick={handleClose}>
+          <button className="cancel-button" onClick={handleClose} disabled={isLoading}>
             Hủy
           </button>
         </div>
